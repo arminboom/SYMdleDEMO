@@ -199,9 +199,9 @@ function displaymessage () {
     else if (remove.includes("!") || remove.includes("?") || remove.includes(".") || remove.includes("¿") || 
         remove.includes("¡") || remove.includes(":") || remove.includes(";") || remove.includes("*") 
     ) {
-      givepoints(80)
-      addscore.push(80)
-      await adder(addbadge('lowtier', "Grammatics within", null, "At least one symbol in your roll resembles a commonly used grammatic symbol", "+80 SYM"))
+      givepoints(75)
+      addscore.push(75)
+      await adder(addbadge('lowtier', "Grammatics within", null, "At least one symbol in your roll resembles a commonly used grammatic symbol", "+75 SYM"))
     }
 
     //x-Pair
