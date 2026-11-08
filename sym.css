@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
 @keyframes move {
     100% {background-position: 50%;}
 }
@@ -70,7 +71,7 @@
 body {
     color: var(--lightsym);
     background-color: var(--darksym);
-    font-family: Verdana;
+    font-family: "Rubik";
     font-weight: bold;
     background-blend-mode: soft-light;
     background-position: top;
