@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image" href="./SYMdleICO.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="./sym.css">
+    <script src="./sym.js"></script>
+    <title>SYMdle</title>
+</head>
+<body>
+    <div id="special" class="hide">
+        <p class="position-absolute top-50 start-50 translate-middle" id="specialtext"></p>
+    </div>
+    <header id="nav">
+        <div class="d-flex">
+            <section id="htpshow" onclick="htpshow()" class="m-auto py-3 showcontent">Guide</section>
+            <section id="symshow" onclick="symshow()" class="m-auto py-3 showcontent">Symbols</section>
+            <section id="enshowshow" onclick="enshow()" class="m-auto py-3 showcontent">Notes</section>
+            <section id="cshow" onclick="cshow()" class="m-auto py-3 showcontent">Credits</section>
+        </div>
+    </header>
+
+    <main>
+        <div id="roll">
+            <div class="disappear">
+                SYMdle - ALPHA/DEMO RELEASE - v1.0
+                <p>Roll for Unicode symbols!</p>
+                <p id="info">Interact with the topbar for additional information.<br>It will appear here!<br><span id="disclaimer">Make sure to have JavaScript enabled in order to play!</span></p>
+                <button onclick="displaymessage()" id="rollbutton">ROLL</button>
+            </div>
+        </div>
+        <div id="rollframe">
+        <p id="rand" class="hide">☐☐☐☐☐</p>
+        <div id="tempgone">
+        <p id="symscore" class="hide"><span id="gain">0</span> SYM</p>
+        <p id="rarity" class="hide"></p>
+        <p id="time"></p>
+        <p id="button2" class="disappear"><a href="">Go back</a></p>
+        <p id="badgesection"></p>
+        <p id="score" class="hide"></p>
+        </div>
+        <p id="specialscore" class="disappear"></p>
+        </div>
+    </main>
+
+    <footer class="container-fluid">
+        <div>
+            <p class="m-auto py-2">Made by Arminboom</p>
+            <a href="https://discord.gg/3B4NjRGp3a" target="_blank" class="m-auto"><p>Discord server</p></a>
+        </div>
+    </footer>
+    <audio src="./reveal.mp3" id="reveal" hidden></audio>
+    <audio src="./sound/FinalistTier.mp3" id="FinalistTier" hidden></audio>
+    <audio src="./sound/HyperialTier.mp3" id="HyperialTier" hidden></audio>
+    <audio src="./sound/AscendedTier.mp3" id="AscendedTier" hidden></audio>
+    <audio src="./sound/ExaltedTier.mp3" id="ExaltedTier" hidden></audio>
+    <audio src="./sound/FabledTier.mp3" id="FabledTier" hidden></audio>
+    <audio src="./sound/ExoticTier.mp3" id="ExoticTier" hidden></audio>
+    <audio src="./sound/NobleTier.mp3" id="NobleTier" hidden></audio>
+    <audio src="./sound/UniqueTier.mp3" id="UniqueTier" hidden></audio>
+    <audio src="./sound/UnusualTier.mp3" id="UnusualTier" hidden></audio>
+    <audio src="./sound/UsualTier.mp3" id="UsualTier" hidden></audio>
+</body>
+</html>

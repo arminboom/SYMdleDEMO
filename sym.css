@@ -1,0 +1,265 @@
+
+@keyframes move {
+    100% {background-position: 50%;}
+}
+
+@keyframes rollbg {
+    0% {zoom: 100%;}
+    100% {zoom: 125%;}
+}
+
+@keyframes smaller {
+    0% {zoom: 80%;}
+    100% {zoom: 50%;}
+}
+
+@keyframes appear {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+
+@keyframes appear2 {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+
+@keyframes reveal-appear {
+    100% {color: var(--lightsym)}
+}
+
+@keyframes disappear {
+    from {opacity: 1;}
+    to {opacity: 0;}
+}
+
+@keyframes reveal-disappear {
+    0% {color: var(--lightsym)}
+    70% {color: var(--lightsym)}
+    100% {color: var(--darksym)}
+}
+
+@keyframes down {
+    from {bottom: 0px;}
+    to {bottom: -75px;}
+}
+
+@keyframes up {
+    from {top: 0px;}
+    to {top: -75px;}
+}
+
+@keyframes badge {
+    from {zoom: 115%;}
+    to {zoom: 100%}
+}
+
+@keyframes size {
+    0% {font-size: var(--large); letter-spacing: 0px; color: var(--darksym);}
+    100% {font-size: calc( var(--max) * 2 ); letter-spacing: 20px; color: var(--lightsym);}
+}
+
+:root {
+    --darksym: #585858;
+    --darkersym: #2d2d2d;
+    --lightsym: #FFFFFF;
+    --max: 48px;
+    --large: 36px;
+    --med: 24px;
+    --small: 12px;
+}
+
+body {
+    color: var(--lightsym);
+    background-color: var(--darksym);
+    font-family: Verdana;
+    font-weight: bold;
+    background-blend-mode: soft-light;
+    background-position: top;
+    background-size: 10%;
+    animation-name: move;
+    animation-duration: 2.5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    animation-direction: alternate-reverse;
+}
+
+a {
+    color: var(--lightsym);
+    :hover {
+        opacity: 0.8;
+    }
+}
+
+#nav{
+    background-color: var(--darkersym);
+    height: 50px;
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    line-height: 5px;
+    padding-top: 5px;
+    text-align: center;
+    .showcontent {
+        cursor: pointer;
+    }
+}
+
+main {
+    margin-top: 50px;
+    text-align: center;
+    #roll p:nth-of-type(1){
+        font-size: var(--large);
+    }
+    #roll p:nth-of-type(2){
+        font-size: 0.8em;
+    }
+    button {
+        border: 5px solid #FFFFFF;
+        background-color: transparent;
+        color: var(--lightsym);
+        font-size: var(--med);
+        font-weight: bold;
+    }
+    #disclaimer {
+        font-size: 0.5em;
+        opacity: 0.5;
+    }
+    #rollbutton:hover {
+        text-shadow: 0px 0px 1px var(--lightsym), 0px 0px 1px var(--lightsym), 0px 0px 1px var(--lightsym);
+        box-shadow: 0px 0px 5px var(--lightsym);
+    }
+}
+
+footer {
+    background-color: var(--darkersym);
+    height: 50px;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    line-height: 12.5px;
+    text-align: center;
+}
+
+#rand {
+    margin-bottom: 0px;
+    font-size: var(--large);
+    padding-left: 20px;
+}
+
+#score {
+    font-size: var(--large);
+}
+
+#specialrand, #specialscore {
+    text-shadow: 1px 0px 5px var(--lightsym), 0px 0px 5px var(--lightsym), 0px 0px 10px var(--lightsym);
+}
+
+#button2 {
+    display: none;
+    font-size: 0.6em;
+}
+
+.hide {
+    visibility: hidden;
+}
+
+#leaderboard-box {
+    border: 10px solid var(--lightsym);
+    margin: auto;
+    margin-top: 75px;
+    width: 500px;
+    height: 300px;
+}
+
+#neutral {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+#neutral:hover {
+    opacity: 0.8;
+}
+
+#special {
+    background-color: var(--darkersym);
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    top: 0;
+    opacity: 0;
+    position: absolute;
+}
+
+#special #specialtext {
+    font-size: 3em;
+}
+
+#specialtext {
+    min-width: 100%;
+    text-align: center;
+}
+
+h6 {
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: bold;
+    font-size: 12px;
+}
+
+h3 {
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: bold;
+    font-size: 16px;
+}
+
+h2, h5 {
+    font-weight: bold;
+}
+
+.lowtier {
+    background-color: var(--darkersym);
+    width: 50%;
+    margin: auto;
+    text-align: left;
+    padding: 0.5em;
+    border: 5px solid var(--lightsym);
+    margin-top: 50px;
+    margin-bottom: 50px;
+    animation-name: appear, badge;
+    animation-duration: 0.5s, 0.25s;
+}
+
+.hightier {
+    background-color: var(--darkersym);
+    width: 50%;
+    margin: auto;
+    text-align: left;
+    padding: 0.5em;
+    border: 5px solid var(--lightsym);
+    margin-top: 50px;
+    margin-bottom: 50px;
+    animation-name: appear, badge;
+    animation-duration: 0.5s, 0.25s;
+    text-shadow: 1px 0px 3px var(--lightsym), 0px 0px 3px var(--lightsym), 0px 0px 3px var(--lightsym);
+    box-shadow: 0px 5px 25px var(--lightsym);
+}
+
+#rollframe {
+    margin-top: -25px;
+}
+
+@media screen and (width <= 880px) {
+    .lowtier, .hightier {
+        width: 60%;
+    }
+} 
+
+@media screen and (width <= 440px) {
+    .lowtier, .hightier {
+        width: 90%;
+    }
+    #rand {
+        font-size: calc( var(--max) * 1.2 ) !important; 
+        letter-spacing: 0px !important;
+        padding-left: 0px;
+    } 
+} 
