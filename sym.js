@@ -30,6 +30,14 @@ function symshow () {
   "<a href=>Close</a>"
 }
 
+function updshow () {
+  document.getElementById("info").innerHTML = "Added new badge type: Categorized <br>" +
+  "Fixed some badges giving inccorect SYM amount<br>" +
+  "Added content for credits and update log<br>"+
+  "Adjusted some miscelanious stuff<br>" +
+  "<a href=>Close</a>"
+}
+
 function enshow () {
   document.getElementById("info").innerHTML = "The game has been made in 15 days, total development time of 1.5 days" + "<br>" +
   "<br>This is my first larger game-like project, which has been built up from the ground, where almost all content was produced by entirely myself <br>" +
@@ -38,8 +46,10 @@ function enshow () {
 }
 
 function cshow () {
-  document.getElementById("info").innerHTML = "All content seen here were made or modified by me:" + "<br>" +
-  "[PLACEHOLDER]" + "<br>" +
+  document.getElementById("info").innerHTML = "All content seen here were made by me and the following was modified by me:" + "<br>" +
+  "<br>Sounds: DRAGON-STUDIO, SUBMORITY, SoundReality, Black_Kumizhi, Alex_Jauk, SamuelFJohhans, ejah_music and freesound_community on Pixabay <br>" +
+  "Letter badges: <a href=https://scrabble.collinsdictionary.com/word-lists/>https://scrabble.collinsdictionary.com/word-lists/</a><br>" +
+  "What made the badge design possible: <a href=https://abdessalam.dev/blog/wrap-an-element-with-custom-createelement-in-javascript/>https://abdessalam.dev/blog/wrap-an-element-with-custom-createelement-in-javascript/</a><br>" +
   "<a href=>Close</a>"
 }
 
@@ -72,23 +82,126 @@ function displaymessage () {
     //If statements of hell
     async function checker() {
     let addscore = []
+    
+    // Math category
+    function Maths(value) {
+    if (value == '¬' || value == '+' || value == '%' || value == '*' || value == ':' || value == '^' || value == '~' || value == '=' || value == '>' || value == '<')
+    return true;
+    else 
+    return false;
+    }
+    let AllMaths = roll.every(Maths)
 
-    // Usual badges
-    if (remove.includes("¬") || remove.includes("+") || remove.includes("%") || remove.includes("*") ||
+    if ((AllMaths == true && (remove[0] == remove[1])) && (AllMaths == true && (remove[1] == remove[2])) && 
+        (AllMaths == true && (remove[2] == remove[3])) && (AllMaths == true && (remove[3] == remove[4]))  
+    ) {
+      givepoints(62500000)
+      addscore.push(62500000)
+      await adder(addbadge('hightier', "MATHEMATICALLY UNIFORM", "UNIFORMITY - All mathematical - Mathematical within", "All symbols in your roll are the same and resembles a mathematical symbol", "+62,500,000 SYM"))
+    }
+    if (((AllMaths == true) && remove[0] !== remove[1]) && ((AllMaths == true) &&remove[0] !== remove[2]) && ((AllMaths == true) &&remove[0] !== remove[3]) 
+      && ((AllMaths == true) && remove[1] !== remove[2]) && ((AllMaths == true) &&remove[1] !== remove[3]) && ((AllMaths == true) &&remove[1] !== remove[4])
+      && ((AllMaths == true) && remove[2] !== remove[0]) && ((AllMaths == true) &&remove[2] !== remove[3]) && ((AllMaths == true) &&remove[2] !== remove[4])
+      && ((AllMaths == true) && remove[3] !== remove[0]) && ((AllMaths == true) &&remove[3] !== remove[1]) && ((AllMaths == true) &&remove[3] !== remove[4])
+      && ((AllMaths == true) && remove[4] !== remove[0]) && ((AllMaths == true) &&remove[4] !== remove[1]) && ((AllMaths == true) &&remove[4] !== remove[2]) 
+    ) {
+      givepoints(516500)
+      addscore.push(516500)
+      await adder(addbadge('hightier', "VERSATILE MATHEMATICAL", "All mathematical - Mathematical within", "All symbols in your roll are different from eachother and resembles a mathematical symbol", "+516,500 SYM"))
+    }
+    else if (AllMaths == true
+    ) {
+      givepoints(156250)
+      addscore.push(156250)
+      await adder(addbadge('hightier', "All mathematical", "Mathematical within", "All symbols in your roll resembles a mathematical symbol", "+156,250 SYM"))
+    }
+    else if (remove.includes("¬") || remove.includes("+") || remove.includes("%") || remove.includes("*") ||
         remove.includes(":") || remove.includes("^") || remove.includes("~") || remove.includes("=") ||
         remove.includes(">") || remove.includes("<")
     ) {
       givepoints(50)
       addscore.push(50)
-      await adder(addbadge('lowtier', "Mathenmatical within", null, "At least one symbol in your roll resembles a mathematical symbol", "+50 SYM"))
+      await adder(addbadge('lowtier', "Mathematical within", null, "At least one symbol in your roll resembles a mathematical symbol", "+50 SYM"))
     }
 
-    if (remove.includes("¢") || remove.includes("$") || remove.includes("£") || remove.includes("¥") ||
+    // Currency category
+    function Currency(value) {
+    if (value == '¢' || value == '$' || value == '£' || value == '¥' || value == '¤')
+    return true;
+    else 
+    return false;
+    }
+    let AllCurrency = roll.every(Currency)
+
+    if ((AllCurrency == true && (remove[0] == remove[1])) && (AllCurrency == true && (remove[1] == remove[2])) && 
+        (AllCurrency == true && (remove[2] == remove[3])) && (AllCurrency == true && (remove[3] == remove[4]))  
+    ) {
+      givepoints(125000000)
+      addscore.push(125000000)
+      await adder(addbadge('hightier', "MONETARILY UNIFORM", "UNIFORMITY - All currencies - Currency within", "All symbols in your roll are the same and resembles a monetary symbol", "+125,000,000 SYM"))
+    }
+    if (((AllCurrency == true) && remove[0] !== remove[1]) && ((AllCurrency == true) &&remove[0] !== remove[2]) && ((AllCurrency == true) &&remove[0] !== remove[3]) 
+      && ((AllCurrency == true) && remove[1] !== remove[2]) && ((AllCurrency == true) &&remove[1] !== remove[3]) && ((AllCurrency == true) &&remove[1] !== remove[4])
+      && ((AllCurrency == true) && remove[2] !== remove[0]) && ((AllCurrency == true) &&remove[2] !== remove[3]) && ((AllCurrency == true) &&remove[2] !== remove[4])
+      && ((AllCurrency == true) && remove[3] !== remove[0]) && ((AllCurrency == true) &&remove[3] !== remove[1]) && ((AllCurrency == true) &&remove[3] !== remove[4])
+      && ((AllCurrency == true) && remove[4] !== remove[0]) && ((AllCurrency == true) &&remove[4] !== remove[1]) && ((AllCurrency == true) &&remove[4] !== remove[2]) 
+    ) {
+      givepoints(625000000)
+      addscore.push(625000000)
+      await adder(addbadge('hightier', "INFINITUS MONETAR", "All currencies - Currency within", "All symbols in your roll are different from eachother and resembles a monetary symbol (Now at this point you probably have enough money and quite franky, enough luck to win a lottery so just go ahead and buy a ticket.)", "+625,000,000 SYM"))
+    }
+    else if (AllCurrency == true
+    ) {
+      givepoints(5000000)
+      addscore.push(5000000)
+      await adder(addbadge('hightier', "All currencies", "Currency within", "All symbols in your roll resembles a monetary symbol", "+5,000,000 SYM"))
+    }
+    else if (remove.includes("¢") || remove.includes("$") || remove.includes("£") || remove.includes("¥") ||
         remove.includes("¤") 
     ) {
       givepoints(100)
       addscore.push(100)
-      await adder(addbadge('lowtier', "Mathenmatical within", null, "At least one symbol in your roll resembles a monetary symbol", "+100 SYM"))
+      await adder(addbadge('lowtier', "Currency within", null, "At least one symbol in your roll resembles a monetary symbol", "+100 SYM"))
+    }
+
+    // Grammatical category
+    function Grammatics(value) {
+    if (value == '!' || value == '?' || value == '.' || value == '¿' || value == '¡' || value == ':' || value == ';' || value == '*')
+    return true;
+    else 
+    return false;
+    }
+    let AllGrammatics = roll.every(Grammatics)
+
+    if ((AllCurrency == true && (remove[0] == remove[1])) && (AllCurrency == true && (remove[1] == remove[2])) && 
+        (AllCurrency == true && (remove[2] == remove[3])) && (AllCurrency == true && (remove[3] == remove[4]))  
+    ) {
+      givepoints(78125000)
+      addscore.push(78125000)
+      await adder(addbadge('hightier', "GRAMMATICALLY UNIFORM", "UNIFORMITY - All grammatics - Grammatics within", "All symbols in your roll are the same and resembles a commonly used grammatic symbol", "+78,125,000 SYM"))
+    }
+    if (((AllGrammatics == true) && remove[0] !== remove[1]) && ((AllGrammatics == true) &&remove[0] !== remove[2]) && ((AllGrammatics == true) &&remove[0] !== remove[3]) 
+      && ((AllGrammatics == true) && remove[1] !== remove[2]) && ((AllGrammatics == true) &&remove[1] !== remove[3]) && ((AllGrammatics == true) &&remove[1] !== remove[4])
+      && ((AllGrammatics == true) && remove[2] !== remove[0]) && ((AllGrammatics == true) &&remove[2] !== remove[3]) && ((AllGrammatics == true) &&remove[2] !== remove[4])
+      && ((AllGrammatics == true) && remove[3] !== remove[0]) && ((AllGrammatics == true) &&remove[3] !== remove[1]) && ((AllGrammatics == true) &&remove[3] !== remove[4])
+      && ((AllGrammatics == true) && remove[4] !== remove[0]) && ((AllGrammatics == true) &&remove[4] !== remove[1]) && ((AllGrammatics == true) &&remove[4] !== remove[2]) 
+    ) {
+      givepoints(2326500)
+      addscore.push(2326500)
+      await adder(addbadge('hightier', "VERSATILE GRAMMATICAL", "All grammatics - Grammatics within", "All symbols in your roll are different from eachother and resembles a commonly used grammatic symbol", "+2,326,500 SYM"))
+    }
+    else if (AllGrammatics == true
+    ) {
+      givepoints(475000)
+      addscore.push(475000)
+      await adder(addbadge('hightier', "All grammatics", "Grammatics within", "All symbols in your roll resembles a commonly used grammatic symbol", "+475,000 SYM"))
+    }
+    else if (remove.includes("!") || remove.includes("?") || remove.includes(".") || remove.includes("¿") || 
+        remove.includes("¡") || remove.includes(":") || remove.includes(";") || remove.includes("*") 
+    ) {
+      givepoints(80)
+      addscore.push(80)
+      await adder(addbadge('lowtier', "Grammatics within", null, "At least one symbol in your roll resembles a commonly used grammatic symbol", "+80 SYM"))
     }
 
     //x-Pair
@@ -137,7 +250,7 @@ function displaymessage () {
     }
     else if (((remove[0] == remove[1]) && (remove[1] == remove[2])) 
       || ((remove[1] == remove[2]) && (remove[2] == remove[3]))
-      || ((remove[1] == remove[2]) && (remove[2] == remove[3]))
+      || ((remove[2] == remove[3]) && (remove[3] == remove[4]))
     ) {
       givepoints(12500)
       addscore.push(12500)
@@ -515,16 +628,16 @@ function displaymessage () {
 
     if (remove.includes("©®¯/")
     ) {
-      givepoints(700000)
-      addscore.push(700000)
-      await adder(addbadge('hightier', "Cristiano Ronaldo", null, "The legendary soccer player's motto 'CR7' hides in your roll", "+700,000 SYM"))
+      givepoints(10700000)
+      addscore.push(10700000)
+      await adder(addbadge('hightier', "Cristiano Ronaldo", null, "The legendary soccer player's motto 'CR7' hides in your roll", "+10,700,000 SYM"))
     }
 
     if ((remove[0] == '_') && (remove[2] == '|') && (remove[3] == '/') && (remove[4] == '_')
     ) {
-      givepoints(10000000)
-      addscore.push(10000000)
-      await adder(addbadge('hightier', "FALLEN LOTUS", null, "Your roll is '_☐|/_'", "+10,000,000 SYM"))
+      givepoints(11111111)
+      addscore.push(11111111)
+      await adder(addbadge('hightier', "FALLEN LOTUS", null, "Your roll is '_☐|/_'", "+11,111,111 SYM"))
     }
 
     //Vertical emoticons 
@@ -644,7 +757,7 @@ function displaymessage () {
     if (((remove[0] == "[") || (remove[0] == "{") || (remove[0] == "(")) &&
         ((remove[2] == "_") || (remove[2] == "-") || (remove[2] == ".") || (remove[2] == "~") || (remove[2] == "¬")) &&
         ((remove[4] == "]") || (remove[4] == "}") || (remove[4] == ")")) &&
-        (remove[1] == remove[3])
+        (remove[1] == remove[3]) && (remove[0] == remove[4])
     ) {
       givepoints(10000000)
       addscore.push(10000000)
@@ -652,7 +765,8 @@ function displaymessage () {
     }
     else if (((remove[0] == "[") || (remove[0] == "{") || (remove[0] == "(")) &&
         ((remove[2] == "_") || (remove[2] == "-") || (remove[2] == ".") || (remove[2] == "~") || (remove[2] == "¬")) &&
-        ((remove[4] == "]") || (remove[4] == "}") || (remove[4] == ")")) 
+        ((remove[4] == "]") || (remove[4] == "}") || (remove[4] == ")")) && 
+        (remove[0] == remove[4])
     ) {
       givepoints(500000)
       addscore.push(500000)
