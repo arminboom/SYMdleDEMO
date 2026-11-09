@@ -8,7 +8,7 @@ let stopped = false
 var syms = ['!', '"', '#', '$', '%', '&', '(', ')', '*', '+', '-', '.', '/', ':', ';', '<', '=', '>', '?', '@',
             '[', ']', '^', '_', '`', '{', '|', '}', '~', '¡', '¢', '£', '¤', '¥', '¦', '§', '¨', '©', '«', '¬',
             '®', '¯', '°', '±', '´', 'µ', '¶', '¸', '»', '¿'
-  ]
+    ]
 let nod = ','
 var removed = Array.from(syms).filter(char => char !== nod).join(' ')
 
@@ -31,10 +31,10 @@ function symshow () {
 }
 
 function updshow () {
-  document.getElementById("info").innerHTML = "Added new badge type: Categorized <br>" +
-  "Fixed some badges giving inccorect SYM amount<br>" +
-  "Added content for credits and update log<br>"+
-  "Adjusted some miscelanious stuff<br>" +
+  document.getElementById("info").innerHTML = "Added new badge types: Unit with numbers, Strobogrammatic <br>" +
+  "Fixed a badge bugging the visuals (it was not updated to the new system)<br>" +
+  "Adjusted some badges SYM amount (almost all of them are nerfs)<br>"+
+  "Added some misc badges (and a joke one)<br>" +
   "<a href=>Close</a>"
 }
 
@@ -203,6 +203,21 @@ function displaymessage () {
       addscore.push(75)
       await adder(addbadge('lowtier', "Grammatics within", null, "At least one symbol in your roll resembles a commonly used grammatic symbol", "+75 SYM"))
     }
+    
+    function OneDStrobogammatics(value) {
+    if (value == '+' || value == '-' || value == '|' || value == '=' || value == ':' || value == '¦' || value == '¤' || value == '[' || value == ']' || value == '{' || value == '}' || value == '(' || value == ')')
+    return true;
+    else 
+    return false;
+    }
+    let AllOneDStrobogammatics = roll.every(OneDStrobogammatics)
+
+    if (AllOneDStrobogammatics == true
+    ) {
+      givepoints(42000)
+      addscore.push(42000)
+      await adder(addbadge('lowtier', "1D Strobogrammatic", null, "Your roll would be the same if all sybols would be flipped 180° only in the Y-axis", "+42,000 SYM"))
+    }
 
     //x-Pair
     if ((remove[0] == remove[1]) && (remove[1] == remove[2]) && (remove[2] == remove[3]) && (remove[3] == remove[4])   
@@ -323,11 +338,35 @@ function displaymessage () {
       await adder(addbadge('hightier', "Housewraped", null, "Your roll is a full house, where one acts as a hopwrapped and the other is an inner wrap", "+1,250,000 SYM"))
     }
 
+    if (((remove[0] == remove[1]) && (remove[2] == remove[3])) || ((remove[1] == remove[2]) && (remove[3] == remove[4]))
+    ) {
+      givepoints(25000)
+      addscore.push(25000)
+      await adder(addbadge('lowtier', "Consequtive segment", null, "Your roll has a consequtive segment, the first in the block matches with the second one, and the third with the fourth", "+25,000 SYM"))
+    }
+
+    if (((remove[0] == remove[2]) && (remove[1] == remove[3])) || ((remove[1] == remove[3]) && (remove[2] == remove[4]))
+    ) {
+      givepoints(25000)
+      addscore.push(25000)
+      await adder(addbadge('lowtier', "Repeating segment", null, "Your roll has a repeating segment segment, the first in the block matches with the third one, and the second with the fourth", "+25,000 SYM"))
+    }
+    
     //One-Symmers (Start)
-    if (remove[0] == "#") {
+    if (remove[0] == "#" && remove[1] == "#" && remove[2] == "#") {
+      givepoints(100000)
+      addscore.push(100000)
+      await adder(addbadge('hightier', "Small mardown", null, "Your roll contains '###' at the start", "+100,000 SYM"))
+    }
+    else if (remove[0] == "#" && remove[1] == "#") {
+      givepoints(10000)
+      addscore.push(10000)
+      await adder(addbadge('lowtier', "Smaller mardown", null, "Your roll contains '##' at the start", "+10,000 SYM"))
+    }
+    else if (remove[0] == "#") {
       givepoints(1000)
       addscore.push(1000)
-      await adder(addbadge('lowtier', "Tagged", null, "Your roll contains '#' at the start", "+1000 SYM"))
+      await adder(addbadge('lowtier', "Big mardown", null, "Your roll contains '#' at the start", "+1,000 SYM"))
     }
     if (remove[0] == "+") {
       givepoints(1000)
@@ -359,33 +398,245 @@ function displaymessage () {
       addscore.push(1000)
       await adder(addbadge('lowtier', "Negated", null, "Your roll contains '¬' at the start", "+1000 SYM"))
     }
-    if (remove[0] == "µ") {
+
+    if (remove[0] == "µ" &&
+      (remove[1] == "¶" || remove[1] == "}" || remove[1] == "?" || remove[1] == "$" || remove[1] == "¤") &&
+      (remove[2] == "¶" || remove[2] == "}" || remove[2] == "?" || remove[2] == "$" || remove[2] == "¤") &&
+      (remove[3] == "¶" || remove[3] == "}" || remove[3] == "?" || remove[3] == "$" || remove[3] == "¤") &&
+      (remove[4] == "¶" || remove[4] == "}" || remove[4] == "?" || remove[4] == "$" || remove[4] == "¤")
+    ) {
+      givepoints(10000000)
+      addscore.push(10000000)
+      await adder(addbadge('hightier', "MICRO'D UNIT: TO THE MAX", "Micro'd unit: 3 digits - Micro'd unit: 2 digits - Micro'd unit: 1 digit - Micro'd", "Your roll contains 'µ' at the start, with four number-like symbol after it", "+10,000,000 SYM"))
+    }
+    else if (remove[0] == "µ" &&
+      (remove[1] == "¶" || remove[1] == "}" || remove[1] == "?" || remove[1] == "$" || remove[1] == "¤") &&
+      (remove[2] == "¶" || remove[2] == "}" || remove[2] == "?" || remove[2] == "$" || remove[2] == "¤") &&
+      (remove[3] == "¶" || remove[3] == "}" || remove[3] == "?" || remove[3] == "$" || remove[3] == "¤") 
+    ) {
+      givepoints(1000000)
+      addscore.push(1000000)
+      await adder(addbadge('hightier', "Micro'd unit: 3 digits", "Micro'd unit: 2 digits - Micro'd unit: 1 digit - Micro'd", "Your roll contains 'µ' at the start, with three number-like symbol after it", "+1,000,000 SYM"))
+    }
+    else if (remove[0] == "µ" &&
+      (remove[1] == "¶" || remove[1] == "}" || remove[1] == "?" || remove[1] == "$" || remove[1] == "¤") &&
+      (remove[2] == "¶" || remove[2] == "}" || remove[2] == "?" || remove[2] == "$" || remove[2] == "¤") 
+    ) {
+      givepoints(100000)
+      addscore.push(100000)
+      await adder(addbadge('hightier', "Micro'd unit: 2 digits", "Micro'd unit: 1 digit - Micro'd", "Your roll contains 'µ' at the start, with two number-like symbol after it", "+100,000 SYM"))
+    }
+    else if (remove[0] == "µ" &&
+      (remove[1] == "¶" || remove[1] == "}" || remove[1] == "?" || remove[1] == "$" || remove[1] == "¤")   
+    ) {
+      givepoints(10000)
+      addscore.push(10000)
+      await adder(addbadge('lowtier', "Micro'd unit - 1 digit", "Micro'd", "Your roll contains 'µ' at the start, with a number-like symbol after it", "+10,000 SYM"))
+    }
+    else if (remove[0] == "µ") {
       givepoints(1000)
       addscore.push(1000)
-      await adder(addbadge('lowtier', "Microned", null, "Your roll contains 'µ' at the start", "+1000 SYM"))
+      await adder(addbadge('lowtier', "Micro'd", null, "Your roll contains 'µ' at the start", "+1,000 SYM"))
     }
+
     //One-Symmers (Start)[Currency]
-    if (remove[0] == "$") {
+    //Dollar here can also act as a number, might change that later
+    if (remove[0] == "$" &&
+      (remove[1] == "¶" || remove[1] == "}" || remove[1] == "?" || remove[1] == "$" || remove[1] == "¤") &&
+      (remove[2] == "¶" || remove[2] == "}" || remove[2] == "?" || remove[2] == "$" || remove[2] == "¤") &&
+      (remove[3] == "¶" || remove[3] == "}" || remove[3] == "?" || remove[3] == "$" || remove[3] == "¤") &&
+      (remove[4] == "¶" || remove[4] == "}" || remove[4] == "?" || remove[4] == "$" || remove[4] == "¤")
+    ) {
+      givepoints(10000000)
+      addscore.push(10000000)
+      await adder(addbadge('hightier', "DOLLARED UNIT: TO THE MAX", "Dollared unit: 3 digits - Dollared unit: 2 digits - Dollared unit: 1 digit - Dollared", "Your roll contains '$' at the start, with four number-like symbol after it", "+10,000,000 SYM"))
+    }
+    else if (remove[0] == "$" &&
+      (remove[1] == "¶" || remove[1] == "}" || remove[1] == "?" || remove[1] == "$" || remove[1] == "¤") &&
+      (remove[2] == "¶" || remove[2] == "}" || remove[2] == "?" || remove[2] == "$" || remove[2] == "¤") &&
+      (remove[3] == "¶" || remove[3] == "}" || remove[3] == "?" || remove[3] == "$" || remove[3] == "¤") 
+    ) {
+      givepoints(1000000)
+      addscore.push(1000000)
+      await adder(addbadge('hightier', "Dollared unit: 3 digits", "Dollared unit: 2 digits - Dollared unit: 1 digit - Dollared", "Your roll contains '$' at the start, with three number-like symbol after it", "+1,000,000 SYM"))
+    }
+    else if (remove[0] == "$" &&
+      (remove[1] == "¶" || remove[1] == "}" || remove[1] == "?" || remove[1] == "$" || remove[1] == "¤") &&
+      (remove[2] == "¶" || remove[2] == "}" || remove[2] == "?" || remove[2] == "$" || remove[2] == "¤") 
+    ) {
+      givepoints(100000)
+      addscore.push(100000)
+      await adder(addbadge('hightier', "Dollared unit: 2 digits", "Dollared unit: 1 digit - Dollared", "Your roll contains '$' at the start, with two number-like symbol after it", "+100,000 SYM"))
+    }
+    else if (remove[0] == "$" &&
+      (remove[1] == "¶" || remove[1] == "}" || remove[1] == "?" || remove[1] == "$" || remove[1] == "¤")   
+    ) {
+      givepoints(10000)
+      addscore.push(10000)
+      await adder(addbadge('lowtier', "Dollared unit: - 1 digit", "Dollared", "Your roll contains '$' at the start, with a number-like symbol after it", "+10,000 SYM"))
+    }
+    else if (remove[0] == "$") {
       givepoints(1000)
       addscore.push(1000)
       await adder(addbadge('lowtier', "Dollared", null, "Your roll contains '$' at the start", "+1000 SYM"))
     }
-    if (remove[0] == "¢") {
+
+    if (remove[0] == "¢" &&
+      (remove[1] == "¶" || remove[1] == "}" || remove[1] == "?" || remove[1] == "$" || remove[1] == "¤") &&
+      (remove[2] == "¶" || remove[2] == "}" || remove[2] == "?" || remove[2] == "$" || remove[2] == "¤") &&
+      (remove[3] == "¶" || remove[3] == "}" || remove[3] == "?" || remove[3] == "$" || remove[3] == "¤") &&
+      (remove[4] == "¶" || remove[4] == "}" || remove[4] == "?" || remove[4] == "$" || remove[4] == "¤")
+    ) {
+      givepoints(10000000)
+      addscore.push(10000000)
+      await adder(addbadge('hightier', "CENTED UNIT: TO THE MAX", "Cented unit: 3 digits - Cented unit: 2 digits - Cented unit: 1 digit - Cented", "Your roll contains '¢' at the start, with four number-like symbol after it", "+10,000,000 SYM"))
+    }
+    else if (remove[0] == "¢" &&
+      (remove[1] == "¶" || remove[1] == "}" || remove[1] == "?" || remove[1] == "$" || remove[1] == "¤") &&
+      (remove[2] == "¶" || remove[2] == "}" || remove[2] == "?" || remove[2] == "$" || remove[2] == "¤") &&
+      (remove[3] == "¶" || remove[3] == "}" || remove[3] == "?" || remove[3] == "$" || remove[3] == "¤") 
+    ) {
+      givepoints(1000000)
+      addscore.push(1000000)
+      await adder(addbadge('hightier', "Cented unit: 3 digits", "Cented unit: 2 digits - Cented unit: 1 digit - Cented", "Your roll contains '¢' at the start, with three number-like symbol after it", "+1,000,000 SYM"))
+    }
+    else if (remove[0] == "¢" &&
+      (remove[1] == "¶" || remove[1] == "}" || remove[1] == "?" || remove[1] == "$" || remove[1] == "¤") &&
+      (remove[2] == "¶" || remove[2] == "}" || remove[2] == "?" || remove[2] == "$" || remove[2] == "¤") 
+    ) {
+      givepoints(100000)
+      addscore.push(100000)
+      await adder(addbadge('hightier', "Cented unit: 2 digits", "Cented unit: 1 digit - Cented", "Your roll contains '¢' at the start, with two number-like symbol after it", "+100,000 SYM"))
+    }
+    else if (remove[0] == "¢" &&
+      (remove[1] == "¶" || remove[1] == "}" || remove[1] == "?" || remove[1] == "$" || remove[1] == "¤")   
+    ) {
+      givepoints(10000)
+      addscore.push(10000)
+      await adder(addbadge('lowtier', "Cented unit: - 1 digit", "Cented", "Your roll contains '¢' at the start, with a number-like symbol after it", "+10,000 SYM"))
+    }
+    else if (remove[0] == "¢") {
       givepoints(1000)
       addscore.push(1000)
       await adder(addbadge('lowtier', "Cented", null, "Your roll contains '¢' at the start", "+1000 SYM"))
     }
-    if (remove[0] == "£") {
+
+    if (remove[0] == "£" &&
+      (remove[1] == "¶" || remove[1] == "}" || remove[1] == "?" || remove[1] == "$" || remove[1] == "¤") &&
+      (remove[2] == "¶" || remove[2] == "}" || remove[2] == "?" || remove[2] == "$" || remove[2] == "¤") &&
+      (remove[3] == "¶" || remove[3] == "}" || remove[3] == "?" || remove[3] == "$" || remove[3] == "¤") &&
+      (remove[4] == "¶" || remove[4] == "}" || remove[4] == "?" || remove[4] == "$" || remove[4] == "¤")
+    ) {
+      givepoints(10000000)
+      addscore.push(10000000)
+      await adder(addbadge('hightier', "STERLINGED UNIT: TO THE MAX", "Sterlinged unit: 3 digits - Sterlinged unit: 2 digits - Sterlinged unit: 1 digit - Sterlinged", "Your roll contains '£' at the start, with four number-like symbol after it", "+10,000,000 SYM"))
+    }
+    else if (remove[0] == "£" &&
+      (remove[1] == "¶" || remove[1] == "}" || remove[1] == "?" || remove[1] == "$" || remove[1] == "¤") &&
+      (remove[2] == "¶" || remove[2] == "}" || remove[2] == "?" || remove[2] == "$" || remove[2] == "¤") &&
+      (remove[3] == "¶" || remove[3] == "}" || remove[3] == "?" || remove[3] == "$" || remove[3] == "¤") 
+    ) {
+      givepoints(1000000)
+      addscore.push(1000000)
+      await adder(addbadge('hightier', "Sterlinged unit: 3 digits", "Sterlinged unit: 2 digits - Sterlinged unit: 1 digit - Sterlinged", "Your roll contains '£' at the start, with three number-like symbol after it", "+1,000,000 SYM"))
+    }
+    else if (remove[0] == "£" &&
+      (remove[1] == "¶" || remove[1] == "}" || remove[1] == "?" || remove[1] == "$" || remove[1] == "¤") &&
+      (remove[2] == "¶" || remove[2] == "}" || remove[2] == "?" || remove[2] == "$" || remove[2] == "¤") 
+    ) {
+      givepoints(100000)
+      addscore.push(100000)
+      await adder(addbadge('hightier', "Sterlinged unit: 2 digits", "Sterlinged unit: 1 digit - Sterlinged", "Your roll contains '£' at the start, with two number-like symbol after it", "+100,000 SYM"))
+    }
+    else if (remove[0] == "£" &&
+      (remove[1] == "¶" || remove[1] == "}" || remove[1] == "?" || remove[1] == "$" || remove[1] == "¤")   
+    ) {
+      givepoints(10000)
+      addscore.push(10000)
+      await adder(addbadge('lowtier', "Sterlinged unit: - 1 digit", "Sterlinged", "Your roll contains '£' at the start, with a number-like symbol after it", "+10,000 SYM"))
+    }
+    else if (remove[0] == "£") {
       givepoints(1000)
       addscore.push(1000)
       await adder(addbadge('lowtier', "Sterlinged", null, "Your roll contains '£' at the start", "+1000 SYM"))
     }
-    if (remove[0] == "¤") {
+
+    //Generalized here can also act as a number, might change that later
+    if (remove[0] == "¤" &&
+      (remove[1] == "¶" || remove[1] == "}" || remove[1] == "?" || remove[1] == "$" || remove[1] == "¤") &&
+      (remove[2] == "¶" || remove[2] == "}" || remove[2] == "?" || remove[2] == "$" || remove[2] == "¤") &&
+      (remove[3] == "¶" || remove[3] == "}" || remove[3] == "?" || remove[3] == "$" || remove[3] == "¤") &&
+      (remove[4] == "¶" || remove[4] == "}" || remove[4] == "?" || remove[4] == "$" || remove[4] == "¤")
+    ) {
+      givepoints(10000000)
+      addscore.push(10000000)
+      await adder(addbadge('hightier', "GENERALIZED UNIT: TO THE MAX", "Genealized unit: 3 digits - Genealized unit: 2 digits - Genealized unit: 1 digit - Genealized", "Your roll contains '¤' at the start, with four number-like symbol after it", "+10,000,000 SYM"))
+    }
+    else if (remove[0] == "¤" &&
+      (remove[1] == "¶" || remove[1] == "}" || remove[1] == "?" || remove[1] == "$" || remove[1] == "¤") &&
+      (remove[2] == "¶" || remove[2] == "}" || remove[2] == "?" || remove[2] == "$" || remove[2] == "¤") &&
+      (remove[3] == "¶" || remove[3] == "}" || remove[3] == "?" || remove[3] == "$" || remove[3] == "¤") 
+    ) {
+      givepoints(1000000)
+      addscore.push(1000000)
+      await adder(addbadge('hightier', "Genealized unit: 3 digits", "Genealized unit: 2 digits - Genealized unit: 1 digit - Genealized", "Your roll contains '¤' at the start, with three number-like symbol after it", "+1,000,000 SYM"))
+    }
+    else if (remove[0] == "¤" &&
+      (remove[1] == "¶" || remove[1] == "}" || remove[1] == "?" || remove[1] == "$" || remove[1] == "¤") &&
+      (remove[2] == "¶" || remove[2] == "}" || remove[2] == "?" || remove[2] == "$" || remove[2] == "¤") 
+    ) {
+      givepoints(100000)
+      addscore.push(100000)
+      await adder(addbadge('hightier', "Genealized unit: 2 digits", "Genealized unit: 1 digit - Genealized", "Your roll contains '¤' at the start, with two number-like symbol after it", "+100,000 SYM"))
+    }
+    else if (remove[0] == "¤" &&
+      (remove[1] == "¶" || remove[1] == "}" || remove[1] == "?" || remove[1] == "$" || remove[1] == "¤")   
+    ) {
+      givepoints(10000)
+      addscore.push(10000)
+      await adder(addbadge('lowtier', "Genealized unit: - 1 digit", "Genealized", "Your roll contains '¤' at the start, with a number-like symbol after it", "+10,000 SYM"))
+    }
+    else if (remove[0] == "¤") {
       givepoints(1000)
       addscore.push(1000)
       await adder(addbadge('lowtier', "Generalized", null, "Your roll contains '¤' at the start", "+1000 SYM"))
     }
-    if (remove[0] == "¥") {
+
+    if (remove[0] == "¥" &&
+      (remove[1] == "¶" || remove[1] == "}" || remove[1] == "?" || remove[1] == "$" || remove[1] == "¤") &&
+      (remove[2] == "¶" || remove[2] == "}" || remove[2] == "?" || remove[2] == "$" || remove[2] == "¤") &&
+      (remove[3] == "¶" || remove[3] == "}" || remove[3] == "?" || remove[3] == "$" || remove[3] == "¤") &&
+      (remove[4] == "¶" || remove[4] == "}" || remove[4] == "?" || remove[4] == "$" || remove[4] == "¤")
+    ) {
+      givepoints(10000000)
+      addscore.push(10000000)
+      await adder(addbadge('hightier', "YENED UNIT: TO THE MAX", "Yened unit: 3 digits - Yened unit: 2 digits - Yened unit: 1 digit - Yened", "Your roll contains '¥' at the start, with four number-like symbol after it", "+10,000,000 SYM"))
+    }
+    else if (remove[0] == "¥" &&
+      (remove[1] == "¶" || remove[1] == "}" || remove[1] == "?" || remove[1] == "$" || remove[1] == "¤") &&
+      (remove[2] == "¶" || remove[2] == "}" || remove[2] == "?" || remove[2] == "$" || remove[2] == "¤") &&
+      (remove[3] == "¶" || remove[3] == "}" || remove[3] == "?" || remove[3] == "$" || remove[3] == "¤") 
+    ) {
+      givepoints(1000000)
+      addscore.push(1000000)
+      await adder(addbadge('hightier', "Yened unit: 3 digits", "Yened unit: 2 digits - Yened unit: 1 digit - Yened", "Your roll contains '¥' at the start, with three number-like symbol after it", "+1,000,000 SYM"))
+    }
+    else if (remove[0] == "¥" &&
+      (remove[1] == "¶" || remove[1] == "}" || remove[1] == "?" || remove[1] == "$" || remove[1] == "¤") &&
+      (remove[2] == "¶" || remove[2] == "}" || remove[2] == "?" || remove[2] == "$" || remove[2] == "¤") 
+    ) {
+      givepoints(100000)
+      addscore.push(100000)
+      await adder(addbadge('hightier', "Yened unit: 2 digits", "Yened unit: 1 digit - Yened", "Your roll contains '¥' at the start, with two number-like symbol after it", "+100,000 SYM"))
+    }
+    else if (remove[0] == "¥" &&
+      (remove[1] == "¶" || remove[1] == "}" || remove[1] == "?" || remove[1] == "$" || remove[1] == "¤")   
+    ) {
+      givepoints(10000)
+      addscore.push(10000)
+      await adder(addbadge('lowtier', "Yened unit: - 1 digit", "Yened", "Your roll contains '¥' at the start, with a number-like symbol after it", "+10,000 SYM"))
+    }
+    else if (remove[0] == "¥") {
       givepoints(1000)
       addscore.push(1000)
       await adder(addbadge('lowtier', "Yened", null, "Your roll contains '¥' at the start", "+1000 SYM"))
@@ -393,92 +644,92 @@ function displaymessage () {
 
     //One-Symmers (End)
     if (remove[4] == "!") {
-      givepoints(1000)
-      addscore.push(1000)
-      await adder(addbadge('lowtier', "Exclaimed", null, "Your roll contains '!' at the end", "+1000 SYM"))
+      givepoints(500)
+      addscore.push(500)
+      await adder(addbadge('lowtier', "Exclaimed", null, "Your roll contains '!' at the end", "+500 SYM"))
     }
     if (remove[4] == "?") {
-      givepoints(1000)
-      addscore.push(1000)
-      await adder(addbadge('lowtier', "Questioned", null, "Your roll contains '?' at the end", "+1000 SYM"))
+      givepoints(500)
+      addscore.push(500)
+      await adder(addbadge('lowtier', "Questioned", null, "Your roll contains '?' at the end", "+500 SYM"))
     }
     if (remove[4] == ".") {
-      givepoints(1000)
-      addscore.push(1000)
-      await adder(addbadge('lowtier', "Sentenced", null, "Your roll contains '.' at the end", "+1000 SYM"))
+      givepoints(500)
+      addscore.push(500)
+      await adder(addbadge('lowtier', "Sentenced", null, "Your roll contains '.' at the end", "+500 SYM"))
     }
     if (remove[4] == "%") {
-      givepoints(1000)
-      addscore.push(1000)
-      await adder(addbadge('lowtier', "Perchanced", null, "Your roll contains '%' at the end", "+1000 SYM"))
+      givepoints(500)
+      addscore.push(500)
+      await adder(addbadge('lowtier', "Perchanced", null, "Your roll contains '%' at the end", "+500 SYM"))
     }
     if (remove[4] == "*") {
-      givepoints(1000)
-      addscore.push(1000)
-      await adder(addbadge('lowtier', "Starred", null, "Your roll contains '*' at the end", "+1000 SYM"))
+      givepoints(500)
+      addscore.push(500)
+      await adder(addbadge('lowtier', "Starred", null, "Your roll contains '*' at the end", "+500 SYM"))
     }
     if (remove[4] == ":") {
-      givepoints(1000)
-      addscore.push(1000)
-      await adder(addbadge('lowtier', "Included", null, "Your roll contains ':' at the end", "+1000 SYM"))
+      givepoints(500)
+      addscore.push(500)
+      await adder(addbadge('lowtier', "Included", null, "Your roll contains ':' at the end", "+500 SYM"))
     }
     if (remove[4] == ";") {
-      givepoints(1000)
-      addscore.push(1000)
-      await adder(addbadge('lowtier', "Differed", null, "Your roll contains ';' at the end", "+1000 SYM"))
+      givepoints(500)
+      addscore.push(500)
+      await adder(addbadge('lowtier', "Differed", null, "Your roll contains ';' at the end", "+500 SYM"))
     }
     if (remove[4] == "©") {
-      addscore.push(1000)
-      givepoints(1000)
-      await adder(addbadge('lowtier', "Copyrighted", null, "Your roll contains '©' at the end", "+1000 SYM"))
+      givepoints(500)
+      addscore.push(500)
+      await adder(addbadge('lowtier', "Copyrighted", null, "Your roll contains '©' at the end", "+500 SYM"))
     }
     if (remove[4] == "®") {
-      givepoints(1000)
-      addscore.push(1000)
-      await adder(addbadge('lowtier', "Registered", null, "Your roll contains '®' at the end", "+1000 SYM"))
+      givepoints(500)
+      addscore.push(500)
+      await adder(addbadge('lowtier', "Registered", null, "Your roll contains '®' at the end", "+500 SYM"))
     }
     if (remove[4] == "°") {
-      givepoints(1000)
-      addscore.push(1000)
-      await adder(addbadge('lowtier', "Degreed", null, "Your roll contains '°' at the end", "+1000 SYM"))
+      givepoints(500)
+      addscore.push(500)
+      await adder(addbadge('lowtier', "Degreed", null, "Your roll contains '°' at the end", "+500 SYM"))
     }
     if (remove[4] == "¶") {
-      givepoints(1000)
-      addscore.push(1000)
-      await adder(addbadge('lowtier', "Paragraphed", null, "Your roll contains '¶' at the end", "+1000 SYM"))
+      givepoints(500)
+      addscore.push(500)
+      await adder(addbadge('lowtier', "Paragraphed", null, "Your roll contains '¶' at the end", "+500 SYM"))
     }
 
     //One-Symmers (Middle)
     if (remove[2] == "&") {
-      givepoints(1000)
-      addscore.push(1000)
-      await adder(addbadge('lowtier', "Anded", null, "Your roll contains '&' at the middle", "+1000 SYM"))
+      givepoints(500)
+      addscore.push(500)
+      await adder(addbadge('lowtier', "Anded", null, "Your roll contains '&' at the middle", "+500 SYM"))
     }
     if (remove[2] == "_") {
-      givepoints(1000)
-      addscore.push(1000)
-      await adder(addbadge('lowtier', "Underscored", null, "Your roll contains '_' at the middle", "+1000 SYM"))
+      givepoints(500)
+      addscore.push(500)
+      await adder(addbadge('lowtier', "Underscored", null, "Your roll contains '_' at the middle", "+500 SYM"))
     }
     //One-Symmers (Middle)[Mathematical]
     if (remove[2] == "<") {
-      givepoints(1000)
-      addscore.push(1000)
-      await adder(addbadge('lowtier', "Right-operated", null, "Your roll contains '<' at the middle", "+1000 SYM"))
+      givepoints(500)
+      addscore.push(500)
+      await adder(addbadge('lowtier', "Right-operated", null, "Your roll contains '<' at the middle", "+500 SYM"))
     }
     if (remove[2] == ">") {
-      givepoints(1000)
-      addscore.push(1000)
-      await adder(addbadge('lowtier', "Left-operated", null, "Your roll contains '>' at the middle", "+1000 SYM"))
+      givepoints(500)
+      addscore.push(500)
+      await adder(addbadge('lowtier', "Left-operated", null, "Your roll contains '>' at the middle", "+500 SYM"))
     }
     if (remove[2] == "±") {
-      givepoints(1000)
-      addscore.push(1000)
-      await adder(addbadge('lowtier', "Equalified", null, "Your roll contains '±' at the middle", "+1000 SYM"))
+      givepoints(500)
+      addscore.push(500)
+      await adder(addbadge('lowtier', "Equalified", null, "Your roll contains '±' at the middle", "+500 SYM"))
     }
     if (remove[2] == "=") {
-      givepoints(1000)
-      addscore.push(1000)
-      await adder(addbadge('lowtier', "Equalised", null, "Your roll contains '=' at the middle", "+1000 SYM"))
+      givepoints(500)
+      addscore.push(500)
+      await adder(addbadge('lowtier', "Equalised", null, "Your roll contains '=' at the middle", "+500 SYM"))
     }
 
     //Wrapping-Symbols(Different)
@@ -558,79 +809,79 @@ function displaymessage () {
     //Hiding badges
     if (remove.includes("&&")
     ) {
-      givepoints(10000)
-      addscore.push(10000)
-      await adder(addbadge('lowtier', "And", null, "Two consequtive '&' hides in your roll", "+10,000 SYM"))
+      givepoints(2500)
+      addscore.push(2500)
+      await adder(addbadge('lowtier', "And", null, "Two consequtive '&' hides in your roll", "+2,500 SYM"))
     }
 
     if (remove.includes("!?")
     ) {
-      givepoints(10000)
-      addscore.push(10000)
-      await adder(addbadge('lowtier', "Interrobang", null, "The term '!?' hides in your roll", "+10,000 SYM"))
+      givepoints(2500)
+      addscore.push(2500)
+      await adder(addbadge('lowtier', "Interrobang", null, "The term '!?' hides in your roll", "+2,500 SYM"))
     }
 
     if (remove.includes("!!")
     ) {
-      givepoints(10000)
-      addscore.push(10000)
-      await adder(addbadge('lowtier', "Interrobang", null, "The term '!!' hides in your roll", "+10,000 SYM"))
+      givepoints(2500)
+      addscore.push(2500)
+      await adder(addbadge('lowtier', "Interrobang", null, "The term '!!' hides in your roll", "+2,500 SYM"))
     }
 
     if (remove.includes("**")
     ) {
-      givepoints(10000)
-      addscore.push(10000)
-      await adder(addbadge('lowtier', "Partally filtered", null, "'**' hides in your roll", "+10,000 SYM"))
+      givepoints(2500)
+      addscore.push(2500)
+      await adder(addbadge('lowtier', "Partally filtered", null, "'**' hides in your roll", "+2,500 SYM"))
     }
 
     if (remove.includes("||")
     ) {
-      givepoints(10000)
-      addscore.push(10000)
-      await adder(addbadge('lowtier', "Or", null, "Two consequtive '|' hides in your roll", "+10,000 SYM"))
+      givepoints(2500)
+      addscore.push(2500)
+      await adder(addbadge('lowtier', "Or", null, "Two consequtive '|' hides in your roll", "+2,500 SYM"))
     }
 
     if (remove.includes("//")
     ) {
-      givepoints(10000)
-      addscore.push(10000)
-      await adder(addbadge('lowtier', "Comment", null, "Two consequtive '/' hides in your roll", "+10,000 SYM"))
+      givepoints(2500)
+      addscore.push(2500)
+      await adder(addbadge('lowtier', "Comment", null, "Two consequtive '/' hides in your roll", "+2,500 SYM"))
     }
 
     if (remove.includes("...")
     ) {
-      givepoints(500000)
-      addscore.push(500000)
-      await adder(addbadge('lowtier', "To be continued", null, "Three consequtive '.' hides in your roll", "+500,000 SYM"))
+      givepoints(166000)
+      addscore.push(166000)
+      await adder(addbadge('lowtier', "To be continued", null, "Three consequtive '.' hides in your roll", "+166,000 SYM"))
     }
 
     if (remove.includes("://")
     ) {
-      givepoints(500000)
-      addscore.push(500000)
-      await adder(addbadge('hightier', "PROTOCOL", null, "The series of symbols repestenting protocols hides in your roll", "+500,000 SYM"))
+      givepoints(166000)
+      addscore.push(166000)
+      await adder(addbadge('hightier', "PROTOCOL", null, "The series of symbols repestenting protocols hides in your roll", "+166,000 SYM"))
     }
 
     if (remove.includes("|¦|")
     ) {
-      givepoints(500000)
-      addscore.push(500000)
-      await adder(addbadge('hightier', "Pandora's box", null, "'|¦|' hides in your roll, what could it be?", "+500,000 SYM"))
+      givepoints(166000)
+      addscore.push(166000)
+      await adder(addbadge('hightier', "Pandora's box", null, "'|¦|' hides in your roll, what could it be?", "+166,000 SYM"))
     }
 
     if (remove.includes("][[")
     ) {
-      givepoints(1001000)
-      addscore.push(1001000)
-      await adder(addbadge('hightier', "Bootleg SYMGOD", null, "Just a mere immitation...", "+1,001,000 SYM"))
+      givepoints(166100)
+      addscore.push(166100)
+      await adder(addbadge('hightier', "Bootleg SYMGOD", null, "Just a mere immitation...", "+166,100 SYM"))
     }
 
     if (remove.includes("©®¯/")
     ) {
-      givepoints(10700000)
-      addscore.push(10700000)
-      await adder(addbadge('hightier', "Cristiano Ronaldo", null, "The legendary soccer player's motto 'CR7' hides in your roll", "+10,700,000 SYM"))
+      givepoints(5000700)
+      addscore.push(5000700)
+      await adder(addbadge('hightier', "Cristiano Ronaldo", null, "The legendary soccer player's motto 'CR7' hides in your roll", "+5,000,700 SYM"))
     }
 
     if ((remove[0] == '_') && (remove[2] == '|') && (remove[3] == '/') && (remove[4] == '_')
@@ -643,107 +894,128 @@ function displaymessage () {
     //Vertical emoticons 
     if (remove.includes(":)")
     ) {
-      givepoints(10000)
-      addscore.push(10000)
-      await adder(addbadge('lowtier', "Happy", null, "A happy smiley is in your roll", "+10,000 SYM"))
+      givepoints(2500)
+      addscore.push(2500)
+      await adder(addbadge('lowtier', "Happy", null, "A happy smiley is in your roll", "+2,500 SYM"))
     }
 
     if (remove.includes(":(")
     ) {
-      givepoints(10000)
-      addscore.push(10000)
-      await adder(addbadge('lowtier', "Sad", null, "A sad smiley is in your roll", "+10,000 SYM"))
+      givepoints(2500)
+      addscore.push(2500)
+      await adder(addbadge('lowtier', "Sad", null, "A sad smiley is in your roll", "+2,500 SYM"))
     }
 
     if (remove.includes(":|")
     ) {
-      givepoints(10000)
-      addscore.push(10000)
-      await adder(addbadge('lowtier', "Neutral", null, "A neutral smiley is in your roll", "+10,000 SYM"))
+      givepoints(2500)
+      addscore.push(2500)
+      await adder(addbadge('lowtier', "Neutral", null, "A neutral smiley is in your roll", "+2,500 SYM"))
     }
 
     if (remove.includes(":/")
     ) {
-      givepoints(10000)
-      addscore.push(10000)
-      await adder(addbadge('lowtier', "Slopey", null, "A slopey smiley is in your roll", "+10,000 SYM"))
+      givepoints(2500)
+      addscore.push(2500)
+      await adder(addbadge('lowtier', "Slopey", null, "A slopey smiley is in your roll", "+2,500 SYM"))
     }
 
     if (remove.includes(":>")
     ) {
-      givepoints(10000)
-      addscore.push(10000)
-      await adder(addbadge('lowtier', "Happier", null, "A happier smiley is in your roll", "+10,000 SYM"))
+      givepoints(2500)
+      addscore.push(2500)
+      await adder(addbadge('lowtier', "Happier", null, "A happier smiley is in your roll", "+2,500 SYM"))
     }
 
     if (remove.includes(":<")
     ) {
-      givepoints(10000)
-      addscore.push(10000)
-      await adder(addbadge('lowtier', "Sadder", null, "A sadder smiley is in your roll", "+10,000 SYM"))
+      givepoints(2500)
+      addscore.push(2500)
+      await adder(addbadge('lowtier', "Sadder", null, "A sadder smiley is in your roll", "+2,500 SYM"))
     }
 
     if (remove.includes(":}")
     ) {
-      givepoints(10000)
-      addscore.push(10000)
-      await adder(addbadge('lowtier', "Happy-curly", null, "A happy smiley which is curly in your roll", "+10,000 SYM"))
+      givepoints(2500)
+      addscore.push(2500)
+      await adder(addbadge('lowtier', "Happy-curly", null, "A happy smiley which is curly in your roll", "+2,500 SYM"))
     }
 
     if (remove.includes(":{")
     ) {
-      givepoints(10000)
-      addscore.push(10000)
-      await adder(addbadge('lowtier', "Sad-curly", null, "A sad smiley which is curly in your roll", "+10,000 SYM"))
+      givepoints(2500)
+      addscore.push(2500)
+      await adder(addbadge('lowtier', "Sad-curly", null, "A sad smiley which is curly in your roll", "+2,500 SYM"))
     }
 
     if (remove.includes(":]")
     ) {
-      givepoints(10000)
-      addscore.push(10000)
-      await adder(addbadge('lowtier', "Happy-brackety", null, "A happy smiley which is brackety in your roll", "+10,000 SYM"))
+      givepoints(2500)
+      addscore.push(2500)
+      await adder(addbadge('lowtier', "Happy-brackety", null, "A happy smiley which is brackety in your roll", "+2,500 SYM"))
     }
 
     if (remove.includes(":[")
     ) {
-      givepoints(10000)
-      addscore.push(10000)
-      await adder(addbadge('lowtier', "Sad-brackety", null, "A sad smiley which is brackety in your roll", "+10,000 SYM"))
+      givepoints(2500)
+      addscore.push(2500)
+      await adder(addbadge('lowtier', "Sad-brackety", null, "A sad smiley which is brackety in your roll", "+2,500 SYM"))
+    }
+
+    if (remove.includes(">:)")
+    ) {
+      givepoints(166000)
+      addscore.push(166000)
+      await adder(addbadge('hightier', "Menacing-happy", null, "A happy smiley which is menacing in your roll", "+166,000 SYM"))
+    }
+
+    if (remove.includes(">:(")
+    ) {
+      givepoints(166000)
+      addscore.push(166000)
+      await adder(addbadge('hightier', "Menacing-sad", null, "A sad smiley which is menacing in your roll", "+166,000 SYM"))
     }
 
     if (remove.includes(":|)")
     ) {
-      givepoints(500000)
-      addscore.push(500000)
-      await adder(addbadge('lowtier', ":D", null, "A ':D' is in your roll", "+500,000 SYM"))
+      givepoints(166000)
+      addscore.push(166000)
+      await adder(addbadge('hightier', ":D", null, "A ':D' is in your roll", "+166,000 SYM"))
     }
 
     if (remove.includes(":¦<")
     ) {
-      givepoints(500000)
-      addscore.push(500000)
-      await adder(addbadge('lowtier', "Cat", null, "A cat is in your roll", "+500,000 SYM"))
+      givepoints(166000)
+      addscore.push(166000)
+      await adder(addbadge('hightier', "Cat", null, "A cat is in your roll", "+166,000 SYM"))
     }
 
     if (remove.includes("¶:|")
     ) {
-      givepoints(500000)
-      addscore.push(500000)
-      await adder(addbadge('lowtier', "The Hat Man", null, "The Hat Man is in your roll", "+500,000 SYM"))
+      givepoints(166000)
+      addscore.push(166000)
+      await adder(addbadge('hightier', "The Hat Man", null, "The Hat Man is in your roll", "+166,000 SYM"))
     }
 
     if (remove.includes(":¬}")
     ) {
-      givepoints(500000)
-      addscore.push(500000)
-      await adder(addbadge('lowtier', "Nose Dude", null, "A Nose dude is in your roll", "+500,000 SYM"))
+      givepoints(166000)
+      addscore.push(166000)
+      await adder(addbadge('hightier', "Nose Dude", null, "A Nose dude is in your roll", "+166,000 SYM"))
     }
 
     if (remove.includes("|[/")
     ) {
-      givepoints(500000)
-      addscore.push(500000)
-      await adder(addbadge('lowtier', "Blindfold", null, "A blindfold is in your roll", "+500,000 SYM"))
+      givepoints(166000)
+      addscore.push(166000)
+      await adder(addbadge('hightier', "Blindfold", null, "A blindfold is in your roll", "+166,000 SYM"))
+    }
+
+    if (remove.includes("¤:{]")
+    ) {
+      givepoints(5000000)
+      addscore.push(5000000)
+      await adder(addbadge('hightier', "ALMIGHTY JUDGE", null, "An almighty judge is in your roll", "+5,000,000 SYM"))
     }
 
     if (remove.includes("[#:|)")
@@ -773,6 +1045,13 @@ function displaymessage () {
       await adder(addbadge('hightier', "Expression", null, "Two wrapping marks acting as the face, and the middle acting as a mouth, this creates an expression purely from symbols", "+500,000 SYM"))
     }
 
+    if (remove.includes("(¬.-)")
+    ) {
+      givepoints(505050500)
+      addscore.push(505050500)
+      await adder(addbadge('hightier', "Coney", null, ":traffic-cone:", "+505,050,500 SYM"))
+    }
+
     // Letters and numbers
 
     if (remove.includes("µ") || remove.includes("§") || remove.includes("¢") || remove.includes("@") ||
@@ -784,7 +1063,7 @@ function displaymessage () {
       await adder(addbadge('lowtier', "A letter within", null, "At least one symbol in your roll resembles a letter", "+50 SYM"))
     }
 
-    if (remove.includes("¶") || remove.includes("°") || remove.includes("}") || remove.includes("?") ||
+    if (remove.includes("¶") || remove.includes("}") || remove.includes("?") ||
         remove.includes("$") || remove.includes("¤") 
     ) {
       givepoints(75)
@@ -904,8 +1183,8 @@ function displaymessage () {
     }
 
     setTimeout(() => {
-      sheet.insertRule('#rarity {visibility: visible; animation-name: appear; animation-duration: 0.5s;}');
       sheet.insertRule('#button2 {display: block; animation-name: appear; animation-duration: 0.5s;}');
+      sheet.insertRule('#rarity {visibility: visible; animation-name: appear; animation-duration: 0.5s;}');
       stopped = true
     }, delay);
 
