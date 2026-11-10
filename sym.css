@@ -5,12 +5,12 @@
 
 @keyframes rollbg {
     0% {zoom: 100%;}
-    100% {zoom: 125%;}
+    100% {zoom: 175%;}
 }
 
 @keyframes smaller {
-    0% {zoom: 80%;}
-    100% {zoom: 50%;}
+    0% {zoom: 60%;}
+    100% {zoom: 35%;}
 }
 
 @keyframes appear {
@@ -54,8 +54,8 @@
 }
 
 @keyframes size {
-    0% {font-size: var(--large); letter-spacing: 0px; color: var(--darksym);}
-    100% {font-size: calc( var(--max) * 2 ); letter-spacing: 20px; color: var(--lightsym);}
+    0% {font-size: var(--large); letter-spacing: 0px; opacity: 0;}
+    100% {font-size: calc( var(--max) * 2 ); letter-spacing: 20px; opacity: 1;}
 }
 
 :root {
@@ -122,8 +122,8 @@ main {
         font-weight: bold;
     }
     #disclaimer {
-        font-size: 0.5em;
-        opacity: 0.5;
+        font-size: 0.7em;
+        opacity: 0.7;
     }
     #rollbutton:hover {
         text-shadow: 0px 0px 1px var(--lightsym), 0px 0px 1px var(--lightsym), 0px 0px 1px var(--lightsym);
@@ -259,7 +259,7 @@ h2, h5 {
         width: 90%;
     }
     #rand {
-        font-size: calc( var(--max) * 1.2 ) !important; 
+        font-size: calc( var(--max) * 1.15 ) !important; 
         letter-spacing: 0px !important;
         padding-left: 0px;
     } 
@@ -267,4 +267,20 @@ h2, h5 {
         font-size: var(--small);
         padding-left: 15px;
     }
+} 
+
+@media screen and (width < 376px) {
+    #rand {
+        font-size: var(--max) !important; 
+        letter-spacing: 0px !important;
+        padding-left: 0px;
+    } 
+} 
+
+@media screen and (width < 321px) {
+    #rand {
+        font-size: var(--large) !important; 
+        letter-spacing: 0px !important;
+        padding-left: 0px;
+    } 
 } 
