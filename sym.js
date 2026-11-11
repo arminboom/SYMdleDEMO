@@ -5,7 +5,7 @@ let sheet = style.sheet;
 let delay = 500
 let stopped = false
 
-var syms = ['!', '"', '#', '$', '%', '&', '(', ')', '*', '+', '·', '.', '/', ':', ';', '<', '=', '>', '?', '@',
+var syms = ['!', '"', '#', '$', '%', '&', '(', ')', '*', '+', '-', '.', '/', ':', ';', '<', '=', '>', '?', '@',
             '[', ']', '^', '_', '`', '{', '|', '}', '~', '¡', '¢', '£', '¤', '¥', '¦', '§', '¨', '©', '«', '¬',
             '®', '¯', '°', '±', '´', 'µ', '¶', '¸', '»', '¿'
     ]
@@ -31,13 +31,9 @@ function symshow () {
 }
 
 function updshow () {
-  document.getElementById("info").innerHTML = "Added some Strobogrammatic badges<br>" +
-  "Fixed all bugs (Tiers not working on Firefox, tiers flickering when revealed)<br>" +
-  "Balanced unit badges<br>"+
-  "Removed [CATEGORIZED] UNIFORMITY (it was too OP sorry)<br>"+
-  "Replaced '-' with '·', since the combination of '!-' bugged out the roll (made a shorthand term for a HTML comment)<br>"+
-  "Rollspeed 1s -> 0.5s (Christmas came early)<br>"+
-  "Added some misc stuff<br>" +
+  document.getElementById("info").innerHTML = "Added comments, only on specific rolls, they will serve more purpose later on<br>" +
+  "Fixed some badges" +
+  "Added SYMdle roll token (wow I sure do wonder what it is referencing)<br>"+
   "<a href=>Close</a>"
 }
 
@@ -95,13 +91,6 @@ function displaymessage () {
     }
     let AllMaths = roll.every(Maths)
 
-    if ((AllMaths == true && (remove[0] == remove[1])) && (AllMaths == true && (remove[1] == remove[2])) && 
-        (AllMaths == true && (remove[2] == remove[3])) && (AllMaths == true && (remove[3] == remove[4]))  
-    ) {
-      givepoints(62500000)
-      addscore.push(62500000)
-      await adder(addbadge('hightier', "MATHEMATICALLY UNIFORM", "UNIFORMITY - All mathematical - Mathematical within", "All symbols in your roll are the same and resembles a mathematical symbol", "+62,500,000 SYM"))
-    }
     if (((AllMaths == true) && remove[0] !== remove[1]) && ((AllMaths == true) &&remove[0] !== remove[2]) && ((AllMaths == true) &&remove[0] !== remove[3]) 
       && ((AllMaths == true) && remove[1] !== remove[2]) && ((AllMaths == true) &&remove[1] !== remove[3]) && ((AllMaths == true) &&remove[1] !== remove[4])
       && ((AllMaths == true) && remove[2] !== remove[0]) && ((AllMaths == true) &&remove[2] !== remove[3]) && ((AllMaths == true) &&remove[2] !== remove[4])
@@ -130,27 +119,20 @@ function displaymessage () {
     // Currency category
     function Currency(value) {
     if (value == '¢' || value == '$' || value == '£' || value == '¥' || value == '¤')
-    return true;Grammatics
+    return true;
+    else
     return false;
     }
     let AllCurrency = roll.every(Currency)
-
-    if ((AllCurrency == true && (remove[0] == remove[1])) && (AllCurrency == true && (remove[1] == remove[2])) && 
-        (AllCurrency == true && (remove[2] == remove[3])) && (AllCurrency == true && (remove[3] == remove[4]))  
-    ) {
-      givepoints(125000000)
-      addscore.push(125000000)
-      await adder(addbadge('hightier', "MONETARILY UNIFORM", "UNIFORMITY - All currencies - Currency within", "All symbols in your roll are the same and resembles a monetary symbol", "+125,000,000 SYM"))
-    }
     if (((AllCurrency == true) && remove[0] !== remove[1]) && ((AllCurrency == true) &&remove[0] !== remove[2]) && ((AllCurrency == true) &&remove[0] !== remove[3]) 
       && ((AllCurrency == true) && remove[1] !== remove[2]) && ((AllCurrency == true) &&remove[1] !== remove[3]) && ((AllCurrency == true) &&remove[1] !== remove[4])
       && ((AllCurrency == true) && remove[2] !== remove[0]) && ((AllCurrency == true) &&remove[2] !== remove[3]) && ((AllCurrency == true) &&remove[2] !== remove[4])
       && ((AllCurrency == true) && remove[3] !== remove[0]) && ((AllCurrency == true) &&remove[3] !== remove[1]) && ((AllCurrency == true) &&remove[3] !== remove[4])
       && ((AllCurrency == true) && remove[4] !== remove[0]) && ((AllCurrency == true) &&remove[4] !== remove[1]) && ((AllCurrency == true) &&remove[4] !== remove[2]) 
     ) {
-      givepoints(625000000)
-      addscore.push(625000000)
-      await adder(addbadge('hightier', "INFINITUS MONETAR", "All currencies - Currency within", "All symbols in your roll are different from eachother and resembles a monetary symbol (Now at this point you probably have enough money and quite franky, enough luck to win a lottery so just go ahead and buy a ticket.)", "+625,000,000 SYM"))
+      givepoints(130000000)
+      addscore.push(130000000)
+      await adder(addbadge('hightier', "INFINITUS MONETAR", "All currencies - Currency within", "All symbols in your roll are different from eachother and resembles a monetary symbol.", "+130,000,000 SYM", "(Now at this point you probably have enough money and quite franky, enough luck to win a lottery so just go ahead and buy a ticket.)"))
     }
     else if (AllCurrency == true
     ) {
@@ -837,7 +819,7 @@ function displaymessage () {
     }
 
     //Two and more at start
-    if ((remove[0] == '>') && (remove[4] == '_')
+    if ((remove[0] == '>') && (remove[1] == '_')
     ) {
       givepoints(25000)
       addscore.push(25000)
@@ -919,14 +901,7 @@ function displaymessage () {
     ) {
       givepoints(5000700)
       addscore.push(5000700)
-      await adder(addbadge('hightier', "Cristiano Ronaldo", null, "The legendary soccer player's motto 'CR7' hides in your roll", "+5,000,700 SYM"))
-    }
-
-    if (remove.includes("©®¯/")
-    ) {
-      givepoints(5000700)
-      addscore.push(5000700)
-      await adder(addbadge('hightier', "Cristiano Ronaldo", null, "The legendary soccer player's motto 'CR7' hides in your roll", "+5,000,700 SYM"))
+      await adder(addbadge('hightier', "Cristiano Ronaldo", null, "The legendary soccer player's motto 'CR7' hides in your roll", "+5,000,700 SYM", "Siuuuuuuuu"))
     }
 
     if ((remove[0] == '/') && (remove[1] == '*') && (remove[3] == '*') && (remove[4] == '/')
@@ -940,7 +915,7 @@ function displaymessage () {
     ) {
       givepoints(12511111)
       addscore.push(12511111)
-      await adder(addbadge('hightier', "FALLEN LOTUS", null, "Your roll is '_☐|/_'", "+12,511,111 SYM"))
+      await adder(addbadge('hightier', "FALLEN LOTUS", null, "Your roll is '_☐|/_'", "+12,511,111 SYM", "Your roll is treasured indeed, but something deeper might ensue the next time you'll encounter this..."))
     }
 
     //Vertical emoticons 
@@ -1063,6 +1038,13 @@ function displaymessage () {
       await adder(addbadge('hightier', "Blindfold", null, "A blindfold is in your roll", "+166,000 SYM"))
     }
 
+    if (remove.includes("}<>") || remove.includes("<>{")
+    ) {
+      givepoints(83000)
+      addscore.push(83000)
+      await adder(addbadge('lowtier', "Fish", null, "A fish is in your roll", "+83,000 SYM"))
+    }
+
     if (remove.includes("¤:{]")
     ) {
       givepoints(5000000)
@@ -1074,7 +1056,7 @@ function displaymessage () {
     ) {
       givepoints(500000210)
       addscore.push(500000210)
-      await adder(addbadge('hightier', "ARMINBOOM HIMSELF", null, "I MANIFEST IN YOUR ROLL...", "+500,000,210 SYM"))
+      await adder(addbadge('hightier', "ARMINBOOM HIMSELF", null, "I MANIFEST IN YOUR ROLL...", "+500,000,210 SYM", "It is me, Arminboom"))
     }
 
     //Horizontal expressions
@@ -1101,7 +1083,7 @@ function displaymessage () {
     ) {
       givepoints(505050500)
       addscore.push(505050500)
-      await adder(addbadge('hightier', "Coney", null, ":traffic-cone:", "+505,050,500 SYM"))
+      await adder(addbadge('hightier', "Coney", null, "Exactly '(¬.-)', one of my OC's", "+505,050,500 SYM", ":traffic_cone:"))
     }
 
     // Letters and numbers
@@ -1234,6 +1216,14 @@ function displaymessage () {
       await adder(addbadge('hightier', "MEANINGFUL WITHIN ALL", null, "From the available numbers, your roll contains a meaningful 5 digit number", "+250,000,000 SYM"))
     }
 
+    let symdlerolltoken = Math.floor(Math.random() * 166667) + 1;
+    if (symdlerolltoken == 1
+    ) {
+      givepoints(8333000)
+      addscore.push(8333000)
+      await adder(addbadge('hightier', "SYMDLE ROLL TOKEN", null, "You rolled the alleged chance to get a Pirate shop token", "+8,333,000 SYM", "...too bad it was in SYMdle"))
+    }
+
     setTimeout(() => {
       sheet.insertRule('#button2 {display: block; animation-name: appear; animation-duration: 0.5s;}');
       sheet.insertRule('#rarity {visibility: visible; animation-name: appear; animation-duration: 0.5s;}');
@@ -1241,7 +1231,7 @@ function displaymessage () {
       console.log(remove)
     }, delay);
 
-    async function addbadge(classname, maintext, extrabadges, subtext, symindicator) {
+    function addbadge(classname, maintext, extrabadges, subtext, symindicator, extratext) {
       const div = document.createElement('div')
       div.setAttribute('class', classname)
       const h2 = document.createElement('h2')
@@ -1252,6 +1242,8 @@ function displaymessage () {
       h5.textContent = subtext
       const h6 = document.createElement('h6')
       h6.textContent = symindicator
+      const h4 = document.createElement('h4')
+      h4.textContent = extratext
 
       setTimeout(() => {
         document.getElementById("badgesection").prepend(div)
@@ -1259,6 +1251,7 @@ function displaymessage () {
         document.getElementById("badgesection").prepend(h3)
         document.getElementById("badgesection").prepend(h5)
         document.getElementById("badgesection").prepend(h6)
+        document.getElementById("badgesection").prepend(h4)
       }, delay); 
 
       const wrap = (element, target) => {
@@ -1281,10 +1274,11 @@ function displaymessage () {
       wrap(h3, div)
       wrap(h5, div)
       wrap(h6, div)
+      wrap(h4, div)
     }, delay);
     }
 
-    function givepoints(num) {
+    async function givepoints(num) {
       let sum = 0
       function addscorefunc(num) {
           sum += num
