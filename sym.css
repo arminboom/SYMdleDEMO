@@ -3,6 +3,11 @@
     100% {background-position: 50%;}
 }
 
+@keyframes rare {
+    0% {zoom: 100%;}
+    100% {zoom: 90%;}
+}
+
 @keyframes rollbg {
     0% {zoom: 100%;}
     100% {zoom: 175%;}
@@ -204,6 +209,12 @@ h6 {
     color: rgba(255, 255, 255, 0.5);
     font-weight: bold;
     font-size: 12px;
+}
+
+h4 {
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: bold;
+    font-size: 10px;
 }
 
 h3 {
