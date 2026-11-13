@@ -3,9 +3,25 @@
     100% {background-position: 50%;}
 }
 
+@keyframes abysmal {
+    0% {background-color: var(--darksym);}
+    50% {background-color: var(--darkersym);}
+    100% {background-color: var(--darksym);}
+}
+
 @keyframes rare {
     0% {zoom: 100%;}
-    100% {zoom: 90%;}
+    100% {zoom: 80%;}
+}
+
+@keyframes rarer {
+    0% {zoom: 100%;}
+    100% {zoom: 60%;}
+}
+
+@keyframes rarest {
+    0% {zoom: 100%;}
+    100% {zoom: 40%;}
 }
 
 @keyframes rollbg {
