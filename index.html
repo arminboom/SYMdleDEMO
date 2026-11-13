@@ -9,7 +9,7 @@
     <script src="./sym.js"></script>
     <title>SYMdle</title>
 </head>
-<body>
+<body id="body">
     <div id="special" class="hide">
         <p class="position-absolute top-50 start-50 translate-middle" id="specialtext"></p>
     </div>
@@ -26,7 +26,7 @@
     <main>
         <div id="roll">
             <div class="disappear">
-                SYMdle - ALPHA/DEMO RELEASE - v1.04
+                SYMdle - ALPHA/DEMO RELEASE - v1.05
                 <p>Roll for Unicode symbols!</p>
                 <p id="info">Interact with the topbar for additional information.<br>It will appear here!<br><span id="disclaimer">Make sure to have JavaScript enabled in order to play!<br>Epilepsy warning for certain aspects of the game!</span></p>
                 <button onclick="displaymessage()" id="rollbutton">ROLL</button>
@@ -63,5 +63,6 @@
     <audio src="./sound/UniqueTier.mp3" id="UniqueTier" hidden></audio>
     <audio src="./sound/UnusualTier.mp3" id="UnusualTier" hidden></audio>
     <audio src="./sound/UsualTier.mp3" id="UsualTier" hidden></audio>
+    <audio src="./sound/NoTier.mp3" id="NoTier" hidden></audio>
 </body>
 </html>
