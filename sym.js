@@ -31,14 +31,14 @@ function symshow () {
 }
 
 function updshow () {
-  document.getElementById("info").innerHTML = "Added comments, only on specific rolls, they will serve more purpose later on<br>" +
-  "Fixed some badges" +
-  "Added SYMdle roll token (wow I sure do wonder what it is referencing)<br>"+
+  document.getElementById("info").innerHTML = "Added effects while rolling! (There may be some display issues)<br>" +
+  "Fixed your roll disappearing, for real this time<br>" +
+  "ABYSMAL tier's sound is back with a slight modifiction and custom effect!<br>"+
   "<a href=>Close</a>"
 }
 
 function enshow () {
-  document.getElementById("info").innerHTML = "The game has been made in 15 days, total development time of 1.5 days" + "<br>" +
+  document.getElementById("info").innerHTML = "The game is currently into day 22 of development" + "<br>" +
   "<br>This is my first larger game-like project, which has been built up from the ground, where almost all content was produced by entirely myself <br>" +
   "And most importantly, no use of AI or any generative tools were used for this project." + "<br>" +
   "<a href=>Close</a>"
@@ -60,6 +60,15 @@ function displaymessage () {
     }, delay);
   });
 }
+
+function timedadder(x, y) {
+  return new Promise((resolve) => {
+    setInterval(() => {
+      resolve(x);
+    }, y);
+  });
+}
+
   var roll = []
   var toreveal = ['☐', '☐', '☐', '☐', '☐']
 
@@ -73,7 +82,7 @@ function displaymessage () {
     let no = ','
     var remove = Array.from(roll).filter(char => char !== no).join('')
     var torevealremove = Array.from(toreveal).filter(char => char !== no).join('')
-    document.getElementById("rand").innerHTML = remove + torevealremove
+    document.getElementById("rand").innerText = remove + torevealremove
     document.getElementById("reveal").play()
     document.getElementById("reveal").currentTime = 0
     }
@@ -1164,7 +1173,7 @@ function displaymessage () {
         remove.includes("¡¢£") || remove.includes("¡¢¥") || remove.includes("¡¤§") || remove.includes("¡§¤") || 
         remove.includes("¤£§") || remove.includes("¤¡§") || remove.includes("¤¤§") || remove.includes("¤§£") || remove.includes("¤µ§") || remove.includes("¤¥£") || remove.includes("¤¥§") ||
         remove.includes("¶¡§") || remove.includes("¶µ@") ||
-        remove.includes("§@£") || remove.includes("§@¡") || remove.includes("§@µ") || remove.includes("¤§£") || remove.includes("§£@") || remove.includes("§£¢") || remove.includes("§££") || remove.includes("§£¡") || remove.includes("§£¥") || remove.includes("§¡¢") ||
+        remove.includes("§@£") || remove.includes("§@¡") || remove.includes("§@µ") || remove.includes("§@¥") || remove.includes("§£@") || remove.includes("§£¢") || remove.includes("§££") || remove.includes("§£¡") || remove.includes("§£¥") || remove.includes("§¡¢") ||
         remove.includes("§£¥") || remove.includes("§£§") || remove.includes("§¤¢") || remove.includes("§¤§") || remove.includes("§¤¥") || remove.includes("§µ£") || remove.includes("§µ¶") || remove.includes("§µ¡") || remove.includes("§µ§") || remove.includes("§¥£") ||
         remove.includes("µ£¥") || remove.includes("µ§£") || 
         remove.includes("¥@£") || remove.includes("¥@§") || remove.includes("¥@¥") || remove.includes("¥£@") || remove.includes("¥£§") || remove.includes("¥¤µ") || remove.includes("¥µ§")
@@ -1228,7 +1237,12 @@ function displaymessage () {
       sheet.insertRule('#button2 {display: block; animation-name: appear; animation-duration: 0.5s;}');
       sheet.insertRule('#rarity {visibility: visible; animation-name: appear; animation-duration: 0.5s;}');
       stopped = true
-      console.log(remove)
+      var finalcheck = +document.getElementById("gain").innerText;
+      if (finalcheck <= 100) {
+        document.getElementById("NoTier").play()
+        document.getElementById("body").style.animation = "null"
+        document.getElementById("body").style.animation = "abysmal 5s cubic-bezier(0, 2, 1, 0.8)"
+      }
     }, delay);
 
     function addbadge(classname, maintext, extrabadges, subtext, symindicator, extratext) {
@@ -1279,58 +1293,73 @@ function displaymessage () {
     }
 
     async function givepoints(num) {
+      let animate = document.getElementById("rollframe")
       let sum = 0
-      function addscorefunc(num) {
-          sum += num
+      async function cutscene(time, name) {
+        await timedadder(delay = time*2, 0)
+        await timedadder(animate.style.animation = `${name} ${time}ms`, 0)
+        await timedadder(delay = time, time)
+        animate.style.animation = "none"
+      }
+      async function addscorefunc(num) {
+          await timedadder(sum += num, 0)
       }
       addscore.forEach(addscorefunc)
       if (num >= 10000000) {
         setTimeout(() => {
           document.getElementById("FinalistTier").play()
           document.getElementById("FinalistTier").currentTime = 0
-        }, delay);
+        }, delay*2);
+        cutscene(1000, "rarest")
         }
       else if (num >= 3000000) {
         setTimeout(() => {
           document.getElementById("HyperialTier").play()
           document.getElementById("HyperialTier").currentTime = 0
-        }, delay);
+        }, delay*2);
+        cutscene(1000, "rarest")
         }
       else if (num >= 500000) {
         setTimeout(() => {
           document.getElementById("AscendedTier").play()
           document.getElementById("AscendedTier").currentTime = 0
-        }, delay);
+        }, delay*2);
+        cutscene(750, "rarer")
         }
       else if (num >= 100000) {
         setTimeout(() => {
           document.getElementById("ExaltedTier").play()
           document.getElementById("ExaltedTier").currentTime = 0
-        }, delay);
+        }, delay*2);
+        cutscene(750, "rarer")
         }
       else if (num >= 50000) {
         setTimeout(() => {
           document.getElementById("FabledTier").play()
           document.getElementById("FabledTier").currentTime = 0
-        }, delay);
+        }, delay*2);
+        cutscene(750, "rarer")
         }
       else if (num >= 17500) {
         setTimeout(() => {
           document.getElementById("ExoticTier").play()
           document.getElementById("ExoticTier").currentTime = 0
-        }, delay);
+        }, delay*2);
+        cutscene(500, "rare")
         }
       else if (num >= 7500) {
         setTimeout(() => {
           document.getElementById("NobleTier").play()
           document.getElementById("NobleTier").currentTime = 0
-        }, delay);
+        }, delay*2);
+        cutscene(500, "rare")
         }
       else if (num >= 2500) {
         setTimeout(() => {
           document.getElementById("UniqueTier").play()
           document.getElementById("UniqueTier").currentTime = 0
-        }, delay);
+        }, delay*2);
+        cutscene(500, "rare")
         }
       else if (num >= 1000) {
         setTimeout(() => {
@@ -1347,7 +1376,7 @@ function displaymessage () {
       return setTimeout(() => {
         for (let index = 0; index < delay/10; index++) {
           setTimeout(() => {
-            sum += zero = Math.trunc(num*1000/(delay/10))/1000
+            sum += zero = Math.round(Math.trunc(num*1000/(delay/10))/1000)
             document.getElementById("gain").innerHTML = sum
 
             if (sum >= 10000000) {
