@@ -57,7 +57,7 @@ function updshow () {
   "<br>Added some notes, mainly for missing cutscenes<br>"+
   "Adjusted SYMdle roll token's rarity (166,667 -> 137,500) & some other badges<br>"+
   "Made a custom scrollbar<br>"+
-  "<br>THINGS TO NOTE<br>"+
+  "<br>THINGS TO NOTE!<br>"+
   "Some badges still work in unexpected ways, I'll try to fix them next update<br>"+
   "I acknowledge myself that there are still barely any common badges, I'll take care of it soon<br>"+
   "If by some MIRACLE you get two cutscenes in the same roll, it won't display the second one because it's unintended (it will make more sense later)<br>"+
