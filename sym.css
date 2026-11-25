@@ -79,6 +79,11 @@
     100% {font-size: calc( var(--max) * 2 ); letter-spacing: 20px; opacity: 1;}
 }
 
+@keyframes rotated {
+    0% {rotate: 0deg;}
+    100% {rotate: 360deg;}
+}
+
 :root {
     --darksym: #585858;
     --darkersym: #2d2d2d;
@@ -275,6 +280,74 @@ h2, h5 {
     margin-top: -25px;
 }
 
+#cutscenewrapper {
+    position: fixed;
+    background-color: var(--darkersym);
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    top: 0;
+    visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pnggroup {
+    position: fixed;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#UNIFORMITY_PNG {
+    visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#decoysym {
+    visibility: hidden;
+    color: var(--darkersym);
+    z-index: 2;
+    font-size: var(--max);
+    padding-top: 30px;
+    text-align: center;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 0px;
+}
+
+::-webkit-scrollbar-corner {
+  display: none;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--darkersym);
+  background-size: cover;
+  background-repeat: repeat-x;
+  -webkit-background-size: 30%;
+  position: static;
+}
+ 
+::-webkit-scrollbar-thumb {
+  background: var(--lightsym);
+  max-height: 150px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  opacity: 0.7;
+}
+
+::-webkit-scrollbar:horizontal {
+  width: 10px;
+  visibility: hidden;
+}
+
 @media screen and (width <= 880px) {
     .lowtier, .hightier {
         width: 60%;
@@ -293,6 +366,9 @@ h2, h5 {
     #nav {
         font-size: var(--small);
         padding-left: 15px;
+    }
+    #MRS_A_PNG {
+        width: 75%;
     }
 } 
 
