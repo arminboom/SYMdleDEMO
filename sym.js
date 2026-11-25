@@ -12,6 +12,22 @@ var syms = ['!', '"', '#', '$', '%', '&', '(', ')', '*', '+', '·', '.', '/', ':
 let nod = ','
 var removed = Array.from(syms).filter(char => char !== nod).join(' ')
 
+const wrap = (element, target) => {
+      if (!element || !target) return;
+
+      let wrapper;
+      if (typeof target === "object" && target.nodeType === 1) {
+        wrapper = target;
+      } else {
+        wrapper = createElement(target);
+      }   
+
+      element.parentNode.insertBefore(wrapper, element);
+      wrapper.appendChild(element);
+
+      return wrapper;
+    };
+
 function htpshow () {
   document.getElementById("info").innerHTML = "Upon interacting with the 'ROLL' button, 5 'Balott-boxes' will show up, these will transform into a selection of 50 randomized symbols." + "<br>" +
   "Each symbol gets revealed within a second after the last.<br>" +
@@ -31,14 +47,26 @@ function symshow () {
 }
 
 function updshow () {
-  document.getElementById("info").innerHTML = "Added effects while rolling! (There may be some display issues)<br>" +
-  "Fixed your roll disappearing, for real this time<br>" +
-  "ABYSMAL tier's sound is back with a slight modifiction and custom effect!<br>"+
+  document.getElementById("info").innerHTML = "(Two updates in one?)<br>" +
+  "Added cutscenes! (currently 5 available) for the following:<br>" +
+  "3D STROBOGRAMMATIC - 64.3M, FALLEN LOTUS - 12.55M, UNIFORMITY - 12.5M, ABYSSA'S BLESSING - 10M, SYMDLE ROLL TOKEN - 6.875M<br>"+
+  "<br>Added variants! (currently only extremely rare ones exist)<br>"+
+  "??? - 1.625B (Non-identical variant), ??? - 625M (UNIFORMITY variant), ??? - 555M (FALLEN LOTUS variant)<br>"+
+  "<br>Added the following badges<br>"+
+  "SYMGOD - 1B (The goat is back), UNIFIED BRACKET TRIAD - 32.15, MHTML COMMENT - 10M<br>"+
+  "<br>Added some notes, mainly for missing cutscenes<br>"+
+  "Adjusted SYMdle roll token's rarity (166,667 -> 137,500) & some other badges<br>"+
+  "Made a custom scrollbar<br>"+
+  "<br>THINGS TO NOTE<br>"+
+  "Some badges still work in unexpected ways, I'll try to fix them next update<br>"+
+  "I acknowledge myself that there are still barely any common badges, I'll take care of it soon<br>"+
+  "If by some MIRACLE you get two cutscenes in the same roll, it won't display the second one because it's unintended (it will make more sense later)<br>"+
+  "The variants have the same cutscene as the normal version<br>"+
   "<a href=>Close</a>"
 }
 
 function enshow () {
-  document.getElementById("info").innerHTML = "The game is currently into day 22 of development" + "<br>" +
+  document.getElementById("info").innerHTML = "The game is currently into a month of development" + "<br>" +
   "<br>This is my first larger game-like project, which has been built up from the ground, where almost all content was produced by entirely myself <br>" +
   "And most importantly, no use of AI or any generative tools were used for this project." + "<br>" +
   "<a href=>Close</a>"
@@ -70,19 +98,20 @@ function timedadder(x, y) {
 }
 
   var roll = []
+  var displayroll = []
   var toreveal = ['☐', '☐', '☐', '☐', '☐']
 
   async function generator() {
   for (let index = 0; index < 5; index++) {
-    const span = document.createElement('span')
-    span.setAttribute('class', 'test')
     let gen = Math.floor((Math.random() * syms.length)); 
     toreveal.pop()
-    await adder(roll.push(syms[gen]));
+    roll.push(syms[gen])
+    await adder(displayroll.push(roll[index]));
     let no = ','
     var remove = Array.from(roll).filter(char => char !== no).join('')
     var torevealremove = Array.from(toreveal).filter(char => char !== no).join('')
-    document.getElementById("rand").innerText = remove + torevealremove
+    var displayremove = Array.from(displayroll).filter(char => char !== no).join('')
+    document.getElementById("rand").innerText = displayremove + torevealremove
     document.getElementById("reveal").play()
     document.getElementById("reveal").currentTime = 0
     }
@@ -90,6 +119,34 @@ function timedadder(x, y) {
     //If statements of hell
     async function checker() {
     let addscore = []
+    let decoyroll = []
+    let decoy = ['!', '"', '#', '$', '%', '&', '(', ')', '*', '+', '·', '.', '/', ':', ';', '<', '=', '>', '?', '@',
+            '[', ']', '^', '_', '`', '{', '|', '}', '~', '¡', '¢', '£', '¤', '¥', '¦', '§', '¨', '©', '«', '¬',
+            '®', '¯', '°', '±', '´', 'µ', '¶', '¸', '»', '¿']
+    const cw = document.getElementById('cutscenewrapper')
+    const img = document.createElement('img')
+
+    function makeCutsceneAssets(srcname, idname, classname) {
+    img.setAttribute('src', srcname)
+    img.setAttribute('id', idname)
+    img.setAttribute('class', classname)
+    cw.append(img)
+    }
+    function customText (text) {
+      const el = document.createElement('p')
+      el.textContent = text
+      el.setAttribute('class', 'customtext')
+      cw.append(el)
+    }
+    function typeWriter(dialog) {
+            let index = 0;
+            let interval = setInterval(function () {
+                if (index < dialog.length) {
+                    document.getElementById("decoysym").innerHTML += dialog.charAt(index);
+                    index++;
+                }
+            }, 50);
+        }
     
     // Math category
     function Maths(value) {
@@ -139,9 +196,9 @@ function timedadder(x, y) {
       && ((AllCurrency == true) && remove[3] !== remove[0]) && ((AllCurrency == true) &&remove[3] !== remove[1]) && ((AllCurrency == true) &&remove[3] !== remove[4])
       && ((AllCurrency == true) && remove[4] !== remove[0]) && ((AllCurrency == true) &&remove[4] !== remove[1]) && ((AllCurrency == true) &&remove[4] !== remove[2]) 
     ) {
-      givepoints(130000000)
-      addscore.push(130000000)
-      await adder(addbadge('hightier', "INFINITUS MONETAR", "All currencies - Currency within", "All symbols in your roll are different from eachother and resembles a monetary symbol.", "+130,000,000 SYM", "(Now at this point you probably have enough money and quite franky, enough luck to win a lottery so just go ahead and buy a ticket.)"))
+      givepoints(133333000)
+      addscore.push(133333000)
+      await adder(addbadge('hightier', "INFINITUS MONETAR", "All currencies - Currency within", "All symbols in your roll are different from eachother and resembles a monetary symbol.", "+133,333,000 SYM", "Now at this point you probably have enough money and quite franky, enough luck to win a lottery so just go ahead and buy a ticket. | Cutscene not yet inplemented, sorry!"))
     }
     else if (AllCurrency == true
     ) {
@@ -198,9 +255,49 @@ function timedadder(x, y) {
     let AllThreeDStrobogammatics = roll.every(ThreeDStrobogammatics)
     if (AllThreeDStrobogammatics == true
     ) {
+      await timedadder(delay = 5000, 0)
+      await timedadder(document.getElementById("rollframe").style.animation = `rarest 5s`, 0)
+      sheet.insertRule('#cutscenewrapper {visibility: visible}')
+      await timedadder(document.getElementById("cutscenewrapper").style.animation = `appear 4s both`, 0)
+      setTimeout(() => {
+        document.getElementById("3D_AUDIO").play()
+        makeCutsceneAssets('./CutsceneAssets/3D.png', 'S3D_PNG', 'pnggroup')
+        sheet.insertRule('#S3D_PNG {visibility: visible; animation: appear,rollbg 1.5s both; filter: drop-shadow(0px 0px 8px var(--lightsym));}')
+        sheet.insertRule('#decoysym {visibility: visible; animation: appear 1.5s both; color: var(--darkersym); font-size: 100px; text-align: center; text-shadow: 0px 0px 8px var(--lightsym); letter-spacing: 25px}')
+      }, 3000);
+      await timedadder(null, 4500)
+      for (let index = 0; index < 3; index++) {
+        let Temp3D = ['¤', '+', '·'];
+        await timedadder(decoyroll.push(Temp3D[index]), 500)
+        document.getElementById("decoysym").innerText += decoyroll[index]       
+      }
+      await timedadder(null, 4000)
+      if (!remove.includes('¤')) {
+        decoyroll.pop('¤')
+        document.getElementById("decoysym").innerText = decoyroll
+      }
+      if (!remove.includes('+')) {
+        decoyroll.pop('+')
+        document.getElementById("decoysym").innerText = decoyroll
+      }
+      if (!remove.includes('·')) {
+        decoyroll.pop('·')
+        document.getElementById("decoysym").innerText = decoyroll
+      }
+      await timedadder(delay = 10000, 1500)
+      await timedadder(document.getElementById("cutscenewrapper").style.animation = 'disappear 1.5s both', 0)
+      await timedadder(document.getElementById("S3D_PNG").style.animation = 'disappear,rollbg 1.5s both', 0)
+      setTimeout(() => {
+        document.getElementById("FinalistTier").play()
+        document.getElementById("FinalistTier").currentTime = 0
+        sheet.insertRule('#cutscenewrapper, .pnggroup {display: none}')
+      }, 2000);
       givepoints(64300000)
       addscore.push(64300000)
-      await adder(addbadge('hightier', "3D STROBOGRAMMATIC", null, "For each symbol in your roll, if it were set to be in a 3D plane, each side would be equal to eachother", "+64,300,000 SYM"))
+      await adder(addbadge('hightier', "3D STROBOGRAMMATIC", null, "For each symbol in your roll, if it were set to be in a 3D plane within a finite rotation, a side would remain unchanged", "+64,300,000 SYM"))
+      setTimeout(() => {
+        document.getElementById("FinalistTier").volume = 0
+      }, 15000)
     }
 
     function TwoDStrobogammatics(value) {
@@ -231,12 +328,75 @@ function timedadder(x, y) {
       await adder(addbadge('lowtier', "1D Strobogrammatic", null, "Your roll would be the same if all symbols would be flipped 180° only in the Y-axis", "+29,000 SYM"))
     }
 
+    function UBT_R(value) {
+    if (value == '(' || value == '{' || value == '[')
+    return true;
+    else
+    return false;
+    }
+    function UBT_L(value) {
+    if (value == ')' || value == '}' || value == ']')
+    return true;
+    else
+    return false;
+    }
+    let AllUBTR = roll.every(UBT_R)
+    let AllUBTL = roll.every(UBT_L)
+
+    if ((AllUBTR == true && remove.includes('(') && remove.includes('{') && remove.includes('[')) ||
+        (AllUBTL == true && remove.includes(')') && remove.includes('}') && remove.includes(']'))
+    ) {
+      givepoints(32150000)
+      addscore.push(32150000)
+      await adder(addbadge('hightier', "UNIFIED BRACKET TRIAD", null, "Your roll consists of only brackets, where all 3 types are present and are facing the same direction", "+32,150,000 SYM", "Cutscene not yet implemented, sorry!"))
+    }
+
     //x-Pair
     if ((remove[0] == remove[1]) && (remove[1] == remove[2]) && (remove[2] == remove[3]) && (remove[3] == remove[4])   
     ) {
+      let exoformity = Math.floor(Math.random() * 50) + 1;
+      await timedadder(delay = 5000, 0)
+      await timedadder(document.getElementById("rollframe").style.animation = `rarest 5s`, 0)
+      sheet.insertRule('#cutscenewrapper {visibility: visible}')
+      await timedadder(document.getElementById("cutscenewrapper").style.animation = `appear 4s both`, 0)
+      setTimeout(() => {
+        document.getElementById("UNIFORMITY_AUDIO").play()
+        makeCutsceneAssets('./CutsceneAssets/UNIFORMITY.png', 'UNIFORMITY_PNG', 'pnggroup')
+        sheet.insertRule('#UNIFORMITY_PNG {visibility: visible; animation: appear 1.5s both;}')
+        sheet.insertRule('#decoysym {visibility: visible; animation: appear 1.5s both;}')
+      }, 3000);
+      for (let index = 0; index < displayremove.length+1; index++) {
+        let decoygen = Math.floor((Math.random() * decoy.length)); 
+        sheet.insertRule('#UNIFORMITY_PNG {animation: rollbg 1.5s both 5;}')
+        sheet.insertRule('#decoysym {animation: rollbg 1.5s both 5 3s;}')
+        await timedadder(decoyroll.push(decoy[decoygen]), 1500)
+        document.getElementById("decoysym").innerText = decoy[decoygen]
+        if (index == 5) {
+          document.getElementById("decoysym").innerText = remove[0]
+          sheet.insertRule('#UNIFORMITY_PNG {filter: drop-shadow(0px 0px 8px var(--lightsym))}')
+        }
+      }
+      await timedadder(delay = 10000, 2500)
+      await timedadder(document.getElementById("cutscenewrapper").style.animation = 'disappear 1.5s both', 0)
+      await timedadder(document.getElementById("UNIFORMITY_PNG").style.animation = 'disappear,rollbg 1.5s both', 0)
+      setTimeout(() => {
+        document.getElementById("FinalistTier").play()
+        document.getElementById("FinalistTier").currentTime = 0
+        sheet.insertRule('#cutscenewrapper, .pnggroup {display: none}')
+      }, 2000);
+      if (exoformity == 1) {
+      givepoints(625000000)
+      addscore.push(625000000)
+      await adder(addbadge('hightier', "EXOFORMITY", "UNIFORMITY - Four of a kind - Three of a kind - Two of a kind", '"And alas, everything is in their place"', "+625,000,000 SYM", "1/50 when getting UNIFORMITY | Cutscene not yet implemented, sorry!"))
+      }
+      else {
       givepoints(12500000)
       addscore.push(12500000)
       await adder(addbadge('hightier', "UNIFORMITY", "Four of a kind - Three of a kind - Two of a kind", "Every symbol in the roll is the same", "+12,500,000 SYM"))
+      }
+      setTimeout(() => {
+        document.getElementById("FinalistTier").volume = 0
+      }, 15000)
     }
     else if ((remove[0] == remove[1] && remove[1] == remove[2] && remove[2] == remove[3]) || (remove[0] == remove[1] && remove[1] == remove[2] && remove[2] == remove[4]) 
       || (remove[1] == remove[2] && remove[2] == remove[3] && remove[3] == remove[4]) || (remove[2] == remove[3] && remove[3] == remove[4] && remove[4] == remove[0]) 
@@ -244,7 +404,7 @@ function timedadder(x, y) {
     ) {
       givepoints(250000)
       addscore.push(250000)
-      await adder(addbadge('lowtier', "Four of a kind", "Three of a kind - Two of a kind", "Four of the same symbols appear in the roll", "+250,000 SYM"))
+      await adder(addbadge('hightier', "Four of a kind", "Three of a kind - Two of a kind", "Four of the same symbols appear in the roll", "+250,000 SYM"))
     } 
     else if ((remove[0] == remove[1] && remove[1] == remove[2]) || (remove[0] == remove[1] && remove[1] == remove[3]) || (remove[0] == remove[1] && remove[1] == remove[4])
       || (remove[1] == remove[2] && remove[2] == remove[0]) || (remove[1] == remove[2] && remove[2] == remove[3]) || (remove[1] == remove[2] && remove[2] == remove[4])
@@ -822,9 +982,17 @@ function timedadder(x, y) {
       && remove[3] !== remove[0] && remove[3] !== remove[1] && remove[3] !== remove[4]
       && remove[4] !== remove[0] && remove[4] !== remove[1] && remove[4] !== remove[2] 
     ) {
+      let dissimilarity = Math.floor(Math.random() * 32500000) + 1;
+      if (dissimilarity == 1) {
+      givepoints(1625000000)
+      addscore.push(1625000000)
+      await adder(addbadge('hightier', "ETERNATE DISSIMILARITY", "Non-identical", '"You could say that the stars aligned for you, but at what cost?"', "+1,625,000,000 SYM", "1/32,500,000 when getting no matches | Cutscene not yet implemented, sorry!"))
+      }
+      else {
       givepoints(50)
       addscore.push(50)
       await adder(addbadge('lowtier', "Non-identical", null, "None of the symbols match eachother", "+50 SYM"))
+      }
     }
 
     //Two and more at start
@@ -917,14 +1085,57 @@ function timedadder(x, y) {
     ) {
       givepoints(12500000)
       addscore.push(12500000)
-      await adder(addbadge('hightier', "CSS COMMENT", null, "Your roll is encased in the the CSS comment format ('/*☐*/')", "+12,500,000 SYM"))
+      await adder(addbadge('hightier', "CSS COMMENT", null, "Your roll is encased in the the CSS comment format ('/*☐*/')", "+12,500,000 SYM", "Cutscene not yet implemented, sorry!"))
+    }
+
+    if ((remove[0] == '<') && (remove[1] == '!') && (remove[2] == '_') && (remove[3] == '_')
+    ) {
+      givepoints(12500000)
+      addscore.push(12500000)
+      await adder(addbadge('hightier', "HTML COMMENT", null, "Your roll is in the the HTML comment format ('<!__☐')", "+12,500,000 SYM", "'-' was temporarily disabled, will be added back soon! | Cutscene not yet implemented, sorry!"))
     }
 
     if ((remove[0] == '_') && (remove[2] == '|') && (remove[3] == '/') && (remove[4] == '_')
     ) {
-      givepoints(12511111)
-      addscore.push(12511111)
-      await adder(addbadge('hightier', "FALLEN LOTUS", null, "Your roll is '_☐|/_'", "+12,511,111 SYM", "Your roll is treasured indeed, but something deeper might ensue the next time you'll encounter this..."))
+      let finalotus = Math.floor(Math.random() * 177) + 1;
+      await timedadder(delay = 5000, 0)
+      await timedadder(document.getElementById("rollframe").style.animation = `rarest 5s`, 0)
+      sheet.insertRule('#cutscenewrapper {visibility: visible}')
+      await timedadder(document.getElementById("cutscenewrapper").style.animation = `appear 4s both`, 0)
+      setTimeout(() => {
+        document.getElementById("FALLEN_LOTUS_AUDIO").play()
+        sheet.insertRule('#decoysym {visibility: visible; animation: appear 1.5s both; color: var(--lightsym); font-size: var(--max); letter-spacing: 20px}')
+      }, 1500);
+      for (let index = 0; index < displayremove.length; index++) {
+        let decoyroll = []
+        await timedadder(decoyroll.push(displayremove[index]), 1100)
+        document.getElementById("decoysym").innerText += decoyroll
+        if (index == 4) {
+          document.getElementById("FALLEN_LOTUS_AUDIO_END").play()
+          makeCutsceneAssets('./CutsceneAssets/FALLEN_LOTUS.png', 'FALLEN_LOTUS_PNG', 'pnggroup')
+          sheet.insertRule('#FALLEN_LOTUS_PNG {visibility: visible; animation: appear,rollbg 1.5s both; opacity: 0.5}')
+        }
+      }
+      await timedadder(delay = 10000, 2500)
+      await timedadder(document.getElementById("cutscenewrapper").style.animation = 'disappear 1.5s both', 0)
+      setTimeout(() => {
+        document.getElementById("FinalistTier").play()
+        document.getElementById("FinalistTier").currentTime = 0
+        sheet.insertRule('#cutscenewrapper, .pnggroup {display: none}')
+      }, 2000);
+      if (finalotus == 1 || finalotus == 2 || finalotus == 3 || finalotus == 4) {
+      givepoints(555555000)
+      addscore.push(555555000)
+      await adder(addbadge('hightier', "FINALOTUS", null, "_＼|/_ Peace forever... _＼|/_", "+555,555,000 SYM", "1/44.25 when getting FALLEN LOTUS | Cutscene not yet inplemented, sorry!"))
+      }
+      else {
+      givepoints(12555000)
+      addscore.push(12555000)
+      await adder(addbadge('hightier', "FALLEN LOTUS", null, "Your roll is '_☐|/_'", "+12,555,000 SYM", "While your roll is treasured indeed, something deeper might ensue the next time you'll encounter this..."))
+      }
+      setTimeout(() => {
+        document.getElementById("FinalistTier").volume = 0
+      }, 15000)
     }
 
     //Vertical emoticons 
@@ -1076,7 +1287,7 @@ function timedadder(x, y) {
     ) {
       givepoints(10000000)
       addscore.push(10000000)
-      await adder(addbadge('hightier', "FULL EXPRESSION", "Expression", "Two wrapping marks acting as the face, the middle acting as a mouth and the two inner symbols acting as eyes, thus creating a full expression purely from symbols", "+10,000,000 SYM"))
+      await adder(addbadge('hightier', "FULL EXPRESSION", "Expression", "Two wrapping marks acting as the face, the middle acting as a mouth and the two inner symbols acting as eyes, thus creating a full expression purely from symbols", "+10,000,000 SYM", "Cutscene not yet inplemented, sorry!"))
     }
     else if (((remove[0] == "[") || (remove[0] == "{") || (remove[0] == "(")) &&
         ((remove[2] == "_") || (remove[2] == "-") || (remove[2] == ".") || (remove[2] == "~") || (remove[2] == "¬")) &&
@@ -1222,28 +1433,88 @@ function timedadder(x, y) {
     ) {
       givepoints(250000000)
       addscore.push(250000000)
-      await adder(addbadge('hightier', "MEANINGFUL WITHIN ALL", null, "From the available numbers, your roll contains a meaningful 5 digit number", "+250,000,000 SYM"))
+      await adder(addbadge('hightier', "MEANINGFUL WITHIN ALL", null, "From the available numbers, your roll contains a meaningful 5 digit number", "+250,000,000 SYM", "Cutscene not yet inplemented, sorry!"))
     }
 
-    let symdlerolltoken = Math.floor(Math.random() * 166667) + 1;
+    let symdlerolltoken = Math.floor(Math.random() * 137500) + 1;
     if (symdlerolltoken == 1
     ) {
-      givepoints(8333000)
-      addscore.push(8333000)
-      await adder(addbadge('hightier', "SYMDLE ROLL TOKEN", null, "You rolled the alleged chance to get a Pirate shop token", "+8,333,000 SYM", "...too bad it was in SYMdle"))
+      await timedadder(delay = 5000, 0)
+      await timedadder(document.getElementById("rollframe").style.animation = `rarest 5s`, 0)
+      sheet.insertRule('#cutscenewrapper {visibility: visible}')
+      await timedadder(document.getElementById("cutscenewrapper").style.animation = `appear 4s both`, 0)
+      setTimeout(() => {
+        customText("GG.")
+        makeCutsceneAssets('./CutsceneAssets/SRT.png', 'SRT_PNG', 'pnggroup')
+        sheet.insertRule('#SRT_PNG {visibility: visible; animation: appear 1.5s both; top: 10%;}')
+        sheet.insertRule('.customtext {visibility: visible; animation: appear 1.5s both;}')
+      }, 3000);
+      await timedadder(null, 5000)
+      await timedadder(delay = 10000, 2500)
+      await timedadder(document.getElementById("cutscenewrapper").style.animation = 'disappear 1.5s both', 0)
+      await timedadder(document.getElementById("SRT_PNG").style.animation = 'disappear 1.5s both', 0)
+      setTimeout(() => {
+        document.getElementById("HyperialTier").play()
+        document.getElementById("HyperialTier").currentTime = 0
+        sheet.insertRule('#cutscenewrapper, .pnggroup {display: none}')
+      }, 2000);
+      givepoints(6875000)
+      addscore.push(6875000)
+      await adder(addbadge('hightier', "SYMDLE ROLL TOKEN", null, "You rolled the chance to get a Pirate Shop Token", "+6,875,000 SYM", "...too bad it was in SYMdle"))
+      setTimeout(() => {
+        document.getElementById("HyperialTier").volume = 0
+      }, 15000)
     }
 
+    let SYMGOD = Math.floor(Math.random() * 20000000) + 1;
+    if (SYMGOD == 1
+    ) {
+      givepoints(1000000000)
+      addscore.push(1000000000)
+      await adder(addbadge('hightier', "SYMGOD", "THE ONE AND ONLY", "The creator of all symbols right before your eyes", "+1,000,000,000 SYM", "1/20,000,000 from a roll | Cutscene not yet inplemented, sorry!"))
+    }
+    
+    var finalcheck = +document.getElementById("gain").innerText;
     setTimeout(() => {
       sheet.insertRule('#button2 {display: block; animation-name: appear; animation-duration: 0.5s;}');
       sheet.insertRule('#rarity {visibility: visible; animation-name: appear; animation-duration: 0.5s;}');
       stopped = true
-      var finalcheck = +document.getElementById("gain").innerText;
       if (finalcheck <= 100) {
         document.getElementById("NoTier").play()
         document.getElementById("body").style.animation = "null"
         document.getElementById("body").style.animation = "abysmal 5s cubic-bezier(0, 2, 1, 0.8)"
       }
     }, delay);
+    let mrs_a = Math.floor(Math.random() * 10000) + 1;
+      if (finalcheck <= 100 && mrs_a == 1) {
+      let abyssa_dialog = ['"I will be your saviour, let me guide you to destiny..."']
+      await timedadder(delay = 5000, 0)
+      await timedadder(document.getElementById("rollframe").style.animation = `rarest 5s`, 0)
+      sheet.insertRule('#cutscenewrapper {visibility: visible}')
+      await timedadder(document.getElementById("cutscenewrapper").style.animation = `appear 4s both`, 0)
+      setTimeout(() => {
+        document.getElementById("MRS_A_AUDIO").play()
+        typeWriter(abyssa_dialog[0])
+        makeCutsceneAssets('./CutsceneAssets/MRS_A.png', 'MRS_A_PNG', 'pnggroup')
+        sheet.insertRule('#MRS_A_PNG {visibility: visible; animation: appear 1.5s both; filter: drop-shadow(0px 0px 8px var(--lightsym))}')
+        sheet.insertRule('#decoysym {visibility: visible; animation: appear 1.5s both; color: var(--darkersym); font-size: var(medium); text-align: center; text-shadow: 0px 0px 8px var(--lightsym)}')
+      }, 3000);
+      await timedadder(null, 5000)
+      await timedadder(delay = 10000, 2500)
+      await timedadder(document.getElementById("cutscenewrapper").style.animation = 'disappear 1.5s both', 0)
+      await timedadder(document.getElementById("MRS_A_PNG").style.animation = 'disappear 1.5s both', 0)
+      setTimeout(() => {
+        document.getElementById("FinalistTier").play()
+        document.getElementById("FinalistTier").currentTime = 0
+        sheet.insertRule('#cutscenewrapper, .pnggroup {display: none}')
+      }, 2000);
+      givepoints(10000000)
+      addscore.push(10000000)
+      await adder(addbadge('hightier', "ABYSSA'S BLESSING", null, '"And may you rest now..."', "+10,000,000 SYM", "1 in 10,000 from ABYSMAL"))
+      setTimeout(() => {
+        document.getElementById("FinalistTier").volume = 0
+      }, 15000)
+      }
 
     function addbadge(classname, maintext, extrabadges, subtext, symindicator, extratext) {
       const div = document.createElement('div')
@@ -1268,21 +1539,6 @@ function timedadder(x, y) {
         document.getElementById("badgesection").prepend(h4)
       }, delay); 
 
-      const wrap = (element, target) => {
-      if (!element || !target) return;
-
-      let wrapper;
-      if (typeof target === "object" && target.nodeType === 1) {
-        wrapper = target;
-      } else {
-        wrapper = createElement(target);
-      }   
-
-      element.parentNode.insertBefore(wrapper, element);
-      wrapper.appendChild(element);
-
-      return wrapper;
-    };
     setTimeout(() => {
       wrap(h2, div)
       wrap(h3, div)
@@ -1305,6 +1561,7 @@ function timedadder(x, y) {
           await timedadder(sum += num, 0)
       }
       addscore.forEach(addscorefunc)
+      console.log(addscore.sort(function(a, b){return b - a}))
       if (num >= 10000000) {
         setTimeout(() => {
           document.getElementById("FinalistTier").play()
@@ -1381,7 +1638,7 @@ function timedadder(x, y) {
 
             if (sum >= 10000000) {
               document.getElementById("rarity").innerHTML = "FINALIST"
-              sheet.insertRule('#rand, #symscore, #rarity {text-shadow: 0px 0px 8px var(--lightsym), 0px 0px 8px var(--lightsym), 0px 0px 8px var(--lightsym);}');
+              sheet.insertRule('#rand, #symscore, #rarity {text-shadow: 0px 0px 8px var(--lightsym), 0px 0px 8px var(--lightsym), 0px 0px 8px var(--lightsym);}')
             }
             else if (sum >= 3000000) {
               document.getElementById("rarity").innerHTML = "Hyperial"
