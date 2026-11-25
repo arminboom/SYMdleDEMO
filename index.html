@@ -10,23 +10,23 @@
     <title>SYMdle</title>
 </head>
 <body id="body">
-    <div id="special" class="hide">
-        <p class="position-absolute top-50 start-50 translate-middle" id="specialtext"></p>
+    <div id="cutscenewrapper">
+        <p id="decoysym"></p>
     </div>
     <header id="nav">
         <div class="d-flex">
-            <section id="htpshow" onclick="htpshow()" class="m-auto py-3 showcontent">Guide</section>
-            <section id="symshow" onclick="symshow()" class="m-auto py-3 showcontent">Symbols</section>
-            <section id="enshowshow" onclick="updshow()" class="m-auto py-3 showcontent">Updates</section>
-            <section id="enshowshow" onclick="enshow()" class="m-auto py-3 showcontent">Notes</section>
-            <section id="cshow" onclick="cshow()" class="m-auto py-3 showcontent">Credits</section>
+            <section id="htpshow" onclick="htpshow()" class="m-auto py-1 showcontent">Guide</section>
+            <section id="symshow" onclick="symshow()" class="m-auto py-1 showcontent">Symbols</section>
+            <section id="enshowshow" onclick="updshow()" class="m-auto py-1 showcontent"><h6>Spoilers ahead!</h6>Updates</section>
+            <section id="enshowshow" onclick="enshow()" class="m-auto py-1 showcontent">Notes</section>
+            <section id="cshow" onclick="cshow()" class="m-auto py-1 showcontent">Credits</section>
         </div>
     </header>
 
     <main>
         <div id="roll">
             <div class="disappear">
-                SYMdle - ALPHA/DEMO RELEASE - v1.05
+                SYMdle - ALPHA/DEMO RELEASE - v1.07
                 <p>Roll for Unicode symbols!</p>
                 <p id="info">Interact with the topbar for additional information.<br>It will appear here!<br><span id="disclaimer">Make sure to have JavaScript enabled in order to play!<br>Epilepsy warning for certain aspects of the game!</span></p>
                 <button onclick="displaymessage()" id="rollbutton">ROLL</button>
@@ -42,7 +42,6 @@
         <p id="badgesection"></p>
         <p id="score" class="hide"></p>
         </div>
-        <p id="specialscore" class="disappear"></p>
         </div>
     </main>
 
@@ -53,16 +52,21 @@
         </div>
     </footer>
     <audio src="./reveal.mp3" id="reveal" hidden></audio>
-    <audio src="./sound/FinalistTier.mp3" id="FinalistTier" hidden></audio>
-    <audio src="./sound/HyperialTier.mp3" id="HyperialTier" hidden></audio>
-    <audio src="./sound/AscendedTier.mp3" id="AscendedTier" hidden></audio>
-    <audio src="./sound/ExaltedTier.mp3" id="ExaltedTier" hidden></audio>
-    <audio src="./sound/FabledTier.mp3" id="FabledTier" hidden></audio>
-    <audio src="./sound/ExoticTier.mp3" id="ExoticTier" hidden></audio>
-    <audio src="./sound/NobleTier.mp3" id="NobleTier" hidden></audio>
-    <audio src="./sound/UniqueTier.mp3" id="UniqueTier" hidden></audio>
-    <audio src="./sound/UnusualTier.mp3" id="UnusualTier" hidden></audio>
-    <audio src="./sound/UsualTier.mp3" id="UsualTier" hidden></audio>
+    <audio src="./sound/FinalistTier.mp3" id="FinalistTier" class="tieraudio" hidden></audio>
+    <audio src="./sound/HyperialTier.mp3" id="HyperialTier" class="tieraudio" hidden></audio>
+    <audio src="./sound/AscendedTier.mp3" id="AscendedTier" class="tieraudio" hidden></audio>
+    <audio src="./sound/ExaltedTier.mp3" id="ExaltedTier" class="tieraudio" hidden></audio>
+    <audio src="./sound/FabledTier.mp3" id="FabledTier" class="tieraudio" hidden></audio>
+    <audio src="./sound/ExoticTier.mp3" id="ExoticTier" class="tieraudio" hidden></audio>
+    <audio src="./sound/NobleTier.mp3" id="NobleTier" class="tieraudio" hidden></audio>
+    <audio src="./sound/UniqueTier.mp3" id="UniqueTier" class="tieraudio" hidden></audio>
+    <audio src="./sound/UnusualTier.mp3" id="UnusualTier" class="tieraudio" hidden></audio>
+    <audio src="./sound/UsualTier.mp3" id="UsualTier" class="tieraudio" hidden></audio>
     <audio src="./sound/NoTier.mp3" id="NoTier" hidden></audio>
+    <audio src="./CutsceneAssets/UNIFORMITY_AUDIO.mp3" id="UNIFORMITY_AUDIO"></audio>
+    <audio src="./CutsceneAssets/MRS_A_AUDIO.mp3" id="MRS_A_AUDIO"></audio>
+    <audio src="./CutsceneAssets/FALLEN_LOTUS_AUDIO.mp3" id="FALLEN_LOTUS_AUDIO"></audio>
+    <audio src="./CutsceneAssets/FALLEN_LOTUS_AUDIO_END.mp3" id="FALLEN_LOTUS_AUDIO_END"></audio>
+    <audio src="./CutsceneAssets/3D_AUDIO.mp3" id="3D_AUDIO"></audio>
 </body>
 </html>
